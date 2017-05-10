@@ -1,0 +1,10 @@
+#!/bin/bash
+#batch blastn
+##blastn -db /Users/ferninfm/Desktop/ANTONIA/0_databases/Unite_INDSC/UNITE_public_02.03.2015 -query /Users/ferninfm/Desktop/ANTONIA/1_Collapsed/2_Meganv2/Splidata_A032.fas -out /Users/ferninfm/Desktop/ANTONIA/1_Collapsed//3_UNITE_Blast/UNITE_Splidata_A032.fas.txt -num_threads 3
+for file in ls /Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/1_Input_unique_filtered_fasta/*.fa
+do
+{
+echo "blasting file $file to UNITE"
+blastn -db /Users/ferninfm/Desktop/ANTONIA/0_databases/Unite_INDSC/UNITE_public_02.03.2015 -query $file -out /Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/4B_Blast_UNITE/UNITE_$(basename $file).txt -num_threads 3 -outfmt 10
+}
+done

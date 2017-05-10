@@ -1,0 +1,796 @@
+for(i in 1:707) beta.tub[[i]]<-beta.tub[[i]][1]
+beta.tub<-unlist(beta.tub)
+beta.tub
+dataset
+dataset<-cbind(dataset,rownames(dataset)%in%beta.tub)
+dataset
+datatset[,9]
+dataset[,9]
+dataset[,10]
+dataset[,9]<-dataset[,10]
+dataset<-dataset[,-10]
+dataset
+rownames(dataset)[dataset[,7]==TRUE&dataset[,9]==FALSE]
+rownames(dataset)[dataset[,7]==FALSE&dataset[,9]==TRUE]
+dataset
+head(dataset)
+415.10+1354.43-85.10-152.93
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/EFA/EFA_v3.fasta",format="fasta")
+efa
+efa<-strsplit(names(efa),"_")
+efa<-strsplit(rownames(efa),"_")
+efa
+for(i in 1:692) efa[[i]]<-efa[[i]][1]
+efa(unlist(efa))
+efa<-unlist(efa)
+efa
+dataset
+dataset<-cbind(dataset,rownames(dataset)%in%efa)
+dataset
+colnames(dataset)
+colnames(dataset)[9]
+colnames(dataset)[10]
+colnames(dataset)[10]<-"EFA"
+head(dataset)
+dataset[,10]
+as.numeric(dataset[,10])
+efaqual<-as.numeric(dataset[,10])
+efa
+efa[612:640]
+duplicated(efa)
+efa[duplicated(efa)]
+sort(efa[duplicated(efa)])
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/EFA/EFA_v3.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:658) efa[[i]]<-efa[[i]][1]
+efa
+efa<-unlist(efa)
+dataset[,10]
+duplicated(efa)
+efa[duplicated(efa)]
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/EFA/EFA_v3.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:658) efa[[i]]<-efa[[i]][1]
+efa<-unlist(efa)
+efa
+efa[duplicated(efa)]
+rownames(dataset)%in%efa
+head(dataset)
+dataset[,10]<-rownames(dataset)%in%efa
+efa[605:655]
+dataset[dataset[,7]==TRUE]
+dataset[dataset[,7]==TRUE,]
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v1.fasta",format="fasta")
+efa
+names(efa)
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:683) efa[[i]]<-efa[[i]][1]
+efa
+efa<-unlist(efa)
+efa[duplicated(efa)]
+sort(efa[duplicated(efa)])
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v2.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+sort(efa[duplicated(efa)])
+duplicated(efa)
+efa[duplicated(efa)]
+efa
+for(i in 1:575) efa[[i]]<-efa[[i]][1]
+efa<-unlist(efa)
+sort(efa[duplicated(efa)])
+sort(efa[duplicated(efa)])[1:70]
+sort(efa[duplicated(efa)])[15:70]
+sort(efa[duplicated(efa)])[50:70]
+sort(efa[duplicated(efa)])[58:70]
+sort(efa[duplicated(efa)])[59:70]
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v2.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:575) efa[[i]]<-efa[[i]][1]
+efa<-unlist(efa)
+efa
+sort(efa[duplicated(efa)])[59:70]
+sort(efa[duplicated(efa)])
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v2.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:575) efa[[i]]<-efa[[i]][1]
+sort(efa[duplicated(efa)])
+efa[duplicated(efa)]
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v2.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:575) efa[[i]]<-efa[[i]][1]
+efa<-unlist(efa)
+duplicated(efa)
+efa
+dataset<-cbind(dataset,rownames(dataset)%in%efa)
+dataset
+colnames(dataset)
+colnames(dataset)[11]<-"mcm7"
+write.table(dataset,
+"/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/dataset.txt")
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v4.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:length(efa)) efa[[i]]<-efa[[i]][1]
+efa<-unlist(efa)
+efa
+duplicated(efa)
+sort(efa[duplicated(efa)])
+efa<-read.dna("/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/mcm7/mcm7_v4.fasta",format="fasta")
+efa<-strsplit(rownames(efa),"_")
+for(i in 1:length(efa)) efa[[i]]<-efa[[i]][1]
+efa<-unlist(efa)
+efa
+length(efa)
+duplicated(erfa)
+efa[duplicated(efa)]
+head(dataset)
+dataset[,11]<-rownames(dataset)%in%efa
+dataset
+write.table(dataset,
+"/Volumes/Dropbox/Dropbox/1_Pyrenodesmia/6_Sanger_datasets/dataset.txt")
+dataset
+dataset["866",]
+dataset[dataset[,2]=="C. diphysodes",2]
+levels(dataset[,2])
+dataset
+levels(dataset[,1])
+levels(dataset[,2])
+levels(dataset[,1])
+table(dataset[,1])
+table(dataset[dataset[,7]==TRUE,1])
+dataset
+dataset["1078",]
+as.character(sort(c(1078,1073,1064,1034,1070,1216,1217,1218,1068,1183,1184,1173,1141,1150,1132,1112,1174,1175,1106,1170,1166,1167,1168,1043,1049,1013,1014,1081,1088,1046,1004)))
+dataset[as.character(sort(c(1078,1073,1064,1034,1070,1216,1217,1218,1068,1183,1184,1173,1141,1150,1132,1112,1174,1175,1106,1170,1166,1167,1168,1043,1049,1013,1014,1081,1088,1046,1004))),]
+dataset
+quit()
+ls()
+library(circlize)
+#------------------#
+# 1. GEt total reads#
+#------------------#
+#
+shared.reads<-table(seq.dataset[,1],seq.dataset[,5])#
+for (i in rownames(shared.reads))#
+{#
+	for (j in colnames(shared.reads))#
+	{#
+		if (shared.reads[i,j]!=0)#
+		{#
+		shared.reads[i,j]<-sum(as.numeric(seq.dataset[seq.dataset[,1]==i&seq.dataset[,5]==j,3]))#
+		}#
+	}#
+}#
+total.reads<-rowSums(shared.reads)#
+#
+#------------------#
+#2. Get all.shared reads in the SUBSET#
+#------------------#
+#
+shared.reads<-table(seq.subset[,1],seq.subset[,5])#
+for (i in rownames(shared.reads))#
+{#
+	for (j in colnames(shared.reads))#
+	{#
+		if (shared.reads[i,j]!=0)#
+		{#
+		shared.reads[i,j]<-sum(as.numeric(seq.subset[seq.subset[,1]==i&seq.subset[,5]==j,3]))#
+		}#
+	}#
+}#
+reads.foo<-cbind(rowSums(shared.reads[,colSums(shared.reads !=0)>1]), rowSums(shared.reads))#
+reads.foo<-cbind(reads.foo[,1]/reads.foo[,2],(reads.foo[,2]-reads.foo[,1])/reads.foo[,2])#
+shared.reads<-rbind(shared.reads[1:18,],0,shared.reads[19:25,])#
+rownames(shared.reads)[19]<-names(total.reads)[19]#
+#
+#------------------#
+# 3.Normalize#
+#------------------#
+#
+subset.reads<-rowSums(shared.reads)#
+total.reads.threshold<-subset.reads#
+for (i in names(total.reads.threshold)) total.reads.threshold[i]<-sum(as.numeric((seq.dataset[seq.dataset[,5]!=0&seq.dataset[,1]==i,3])))#
+#FIRST IDEA WILL NOT WORK#
+#for (i in rownames(shared.reads)) shared.reads[i,]<-shared.reads[i,]/total.reads[i]#
+# SECOND WILL#
+for (i in rownames(shared.reads)) shared.reads[i,]<-shared.reads[i,]/subset.reads[i]#
+total.normalized<-total.reads/sum(total.reads)#
+#
+#------------------#
+# 4. Reorder for plot#
+#------------------#
+#
+reorder<- c(1,2,3,4,6,5,7,12,8,9,10,11,13,15,14,16,17,20,18,22,21,23,24,25,26)#
+total.normalized<-total.normalized[reorder]#
+total.reads<-total.reads[reorder]#
+shared.reads<-shared.reads[reorder,]#
+subset.reads<-subset.reads[reorder]
+#----------------------------------------------#
+# 5. Get all.shared TREMELLALES reads in the SUBSET#
+#----------------------------------------------#
+#
+shared.trem.reads<-table(seq.subset[seq.subset[,17]=="Tremellomycetes",1],seq.subset[seq.subset[,17]=="Tremellomycetes",5])#
+top.trem<-names(colSums(shared.trem.reads)[order(colSums(shared.trem.reads),decreasing=T)][1:3])#
+for (i in rownames(shared.trem.reads))#
+{#
+	for (j in colnames(shared.trem.reads))#
+	{#
+		if (shared.trem.reads[i,j]!=0)#
+		{#
+		shared.trem.reads[i,j]<-sum(as.numeric(seq.subset[seq.subset[,1]==i&seq.subset[,5]==j,3]))#
+		}#
+	}#
+}#
+reads.trem<-cbind(rowSums(shared.trem.reads[,colSums(shared.trem.reads !=0)>1]), rowSums(shared.trem.reads))#
+reads.trem<-cbind(reads.trem[,1]/reads.trem[,2],(reads.trem[,2]-reads.trem[,1])/reads.trem[,2])#
+for (i in rownames(shared.trem.reads)) shared.trem.reads[i,]<-shared.trem.reads[i,]/subset.reads[i]#
+#------------------#
+# 6. Get Botryosphaeriales#
+#------------------#
+shared.bot.reads<-table(seq.subset[seq.subset[,19]=="Botryosphaeriales",1],seq.subset[seq.subset[,19]=="Botryosphaeriales",5])#
+top.bot<-names(colSums(shared.bot.reads)[order(colSums(shared.bot.reads),decreasing=T)][1:3])#
+for (i in rownames(shared.bot.reads))#
+{#
+	for (j in colnames(shared.bot.reads))#
+	{#
+		if (shared.bot.reads[i,j]!=0)#
+		{#
+		shared.bot.reads[i,j]<-sum(as.numeric(seq.subset[seq.subset[,1]==i&seq.subset[,5]==j,3]))#
+		}#
+	}#
+}#
+reads.bot<-cbind(rowSums(shared.bot.reads[,colSums(shared.bot.reads !=0)>1]), rowSums(shared.bot.reads))#
+reads.bot<-cbind(reads.bot[,1]/reads.bot[,2],(reads.bot[,2]-reads.bot[,1])/reads.bot[,2])#
+for (i in rownames(shared.bot.reads)) shared.bot.reads[i,]<-shared.bot.reads[i,]/subset.reads[i]#
+#------------------#
+# 7. Get Chaetothyriales#
+#------------------#
+shared.chae.reads<-table(seq.subset[seq.subset[,19]=="Chaetothyriales",1],seq.subset[seq.subset[,19]=="Chaetothyriales",5])#
+top.chae<-names(colSums(shared.chae.reads)[order(colSums(shared.chae.reads),decreasing=T)][1:3])#
+for (i in rownames(shared.chae.reads))#
+{#
+	for (j in colnames(shared.chae.reads))#
+	{#
+		if (shared.chae.reads[i,j]!=0)#
+		{#
+		shared.chae.reads[i,j]<-sum(as.numeric(seq.subset[seq.subset[,1]==i&seq.subset[,5]==j,3]))#
+		}#
+	}#
+}#
+reads.chae<-cbind(rowSums(shared.chae.reads[,colSums(shared.chae.reads !=0)>1]), rowSums(shared.chae.reads))#
+reads.chae<-cbind(reads.chae[,1]/reads.chae[,2],(reads.chae[,2]-reads.chae[,1])/reads.chae[,2])#
+for (i in rownames(shared.chae.reads)) shared.chae.reads[i,]<-shared.chae.reads[i,]/subset.reads[i]#
+#------------------#
+# 8. Get Capnodiales#
+#------------------#
+shared.cap.reads<-table(seq.subset[seq.subset[,19]=="Capnodiales",1],seq.subset[seq.subset[,19]=="Capnodiales",5])#
+top.cap<-names(colSums(shared.cap.reads)[order(colSums(shared.cap.reads),decreasing=T)][1:3])#
+for (i in rownames(shared.cap.reads))#
+{#
+	for (j in colnames(shared.cap.reads))#
+	{#
+		if (shared.cap.reads[i,j]!=0)#
+		{#
+		shared.cap.reads[i,j]<-sum(as.numeric(seq.subset[seq.subset[,1]==i&seq.subset[,5]==j,3]))#
+		}#
+	}#
+}#
+reads.cap<-cbind(rowSums(shared.cap.reads[,colSums(shared.cap.reads !=0)>1]), rowSums(shared.cap.reads))#
+reads.cap<-cbind(reads.cap[,1]/reads.cap[,2],(reads.cap[,2]-reads.cap[,1])/reads.cap[,2])#
+for (i in rownames(shared.cap.reads)) shared.cap.reads[i,]<-shared.cap.reads[i,]/subset.reads[i]#
+#
+#------------------#
+# 9. Reorder for plot#
+#------------------#
+#reorder<- c(1,2,3,4,6,5,7,12,8,9,10,11,13,15,14,16,17,20,18,22,21,23,24,25,26)#
+#total.normalized<-total.normalized[reorder]#
+#total.reads<-total.reads[reorder]#
+#shared.reads<-shared.reads[reorder,]#
+#subset.reads<-subset.reads[reorder]#
+shared.trem.reads<-shared.trem.reads[names(total.normalized)[names(total.normalized)%in%row.names(shared.trem.reads)],]#
+reads.trem<-reads.trem[names(total.normalized)[names(total.normalized)%in%row.names(reads.trem)],]#
+rownames(reads.trem)<-c(1:25)[names(total.normalized)%in%row.names(reads.trem)]#
+shared.bot.reads<-shared.bot.reads[names(total.normalized)[names(total.normalized)%in%row.names(shared.bot.reads)],]#
+reads.bot<-reads.bot[names(total.normalized)[names(total.normalized)%in%row.names(reads.bot)],]#
+rownames(reads.bot)<-c(1:25)[names(total.normalized)%in%row.names(reads.bot)]#
+shared.chae.reads<-shared.chae.reads[names(total.normalized)[names(total.normalized)%in%row.names(shared.chae.reads)],]#
+reads.chae<-reads.chae[names(total.normalized)[names(total.normalized)%in%row.names(reads.chae)],]#
+rownames(reads.chae)<-c(1:25)[names(total.normalized)%in%row.names(reads.chae)]#
+shared.cap.reads<-shared.cap.reads[names(total.normalized)[names(total.normalized)%in%row.names(shared.cap.reads)],]#
+reads.cap<-reads.cap[names(total.normalized)[names(total.normalized)%in%row.names(reads.cap)],]#
+rownames(reads.cap)<-c(1:25)[names(total.normalized)%in%row.names(reads.cap)]#
+reads.foo<-reads.foo[names(total.normalized)[names(total.normalized)%in%row.names(reads.foo)],]#
+rownames(reads.foo)<-c(1:25)[names(total.normalized)%in%row.names(reads.foo)]#
+##
+starting.points<-shared.reads#
+rownames(starting.points)<-c(1:25)#
+library(reshape2)#
+starting.points<-melt(starting.points)#
+starting.points<-starting.points[starting.points[,3]!=0,]#
+starting.points<-starting.points[order(starting.points[,1],starting.points[,2]),]#
+starting.points<-cbind(starting.points,0,0)#
+for (i in 1:25)#
+{#
+	lilo<-cumsum(starting.points[starting.points[,1]==i,3])#
+	if(length(lilo)!=0)#
+	{#
+	starting.points[starting.points[,1]==i,4]<-c(0,lilo[1:(length(lilo)-1)])#
+	starting.points[starting.points[,1]==i,5]<-lilo#
+	}#
+}#
+#-----------------------------------------------------#
+##
+# Threshold criteria for networks#
+##
+#-----------------------------------------------------#
+# Option 1 Averaged Threshold#
+# starting.trem<-starting.trem[starting.trem[,3]>0.0022,]#
+# Option 2 Specific Threshold per sample#
+exclude.lichens<-seq.dataset[liq.ds==1,]#
+exclude.lichens<-data.frame(exclude.lichens)#
+exclude.lichens$size<-as.numeric(as.matrix(exclude.lichens$size))#
+exclude.lichens<-aggregate(size~sample+OTU,exclude.lichens,sum)#
+names(exclude.lichens)[3]<-"size"#
+# Optional substract OTU 0#
+exclude.lichens<-exclude.lichens[-c(1:4),]#
+##
+exclude.lichens<-aggregate(size~sample,exclude.lichens,mean)#
+#OTHER OPTIONS#
+#exclude.lichens<-aggregate(size~sample,exclude.lichens,sum)#
+#exclude.lichens<-aggregate(size~sample,exclude.lichens,max)#
+rownames(exclude.lichens)<-exclude.lichens[,1]#
+#for (i in rownames(exclude.lichens)) exclude.lichens[i,2]<-exclude.lichens[i,2]/total.reads[i]#
+for (i in rownames(exclude.lichens)) exclude.lichens[i,2]<-exclude.lichens[i,2]/subset.reads[i]#
+foo.exclude<-subset.reads#
+for (i in rownames(exclude.lichens)) foo.exclude[i]<-exclude.lichens[i,2]#
+foo.exclude[foo.exclude>1]<-0#
+foo.exclude[foo.exclude<0.001]<-0.001#
+#------------------------------------#
+##
+# 10. Start Circos Plots#
+##
+#------------------------------------#
+#
+#------------------#
+# 10.1 Declare variables#
+#------------------#
+colorinos<-c("#a6cee3","#1f78b4","#1f78b4","#b2df8a","#33a02c","#33a02c","#21ac6a","#fb9a99","#fb9a99","#fb9a99","#fb9a99","#fb9a99","#e31a1c","#fdbf6f","#fdbf6f","#ff7f00","#ff7f00","#cab2d6","#cab2d6","#6a3d9a","#6a3d9a","#6a3d9a","#6a3d9a","#266cdd","#4636e1")#
+colorinos.trans<-c("#a6cee344","#1f78b444","#1f78b444","#b2df8a44","#33a02c44","#33a02c44","#21ac6a44","#fb9a9944","#fb9a9944","#fb9a9944","#fb9a9944","#fb9a9944","#e31a1c44","#fdbf6f44","#fdbf6f44","#ff7f0044","#ff7f0044","#cab2d644","#cab2d644","#6a3d9a44","#6a3d9a44","#6a3d9a44","#6a3d9a44","#266cdd44","#4636e144")#
+infected<-c(0,0,1,0,0,1,0,0,1,1,1,1,0,0,1,0,0,0,1,0,1,1,1,0,1)#
+foo<-unlist(strsplit(names(total.normalized),"\\+"))#
+dim(foo)<-c(3,25)#
+foo<-t(foo)#
+foo<-gsub("_"," ",foo)#
+foo[,1]<-c("A. fuscata","A. myrinii","A. myrinii","C. vitellina","L. biccinta","L. biccinta","L. intricata","L. polytropa","L. polytropa","L. polytropa","L. polytropa","L. polytropa","L. swartzii","L. lapicida","L. lapicida","P. conglomerata","P. conglomerata","R. geographicum","R. geographicum","T. atra","T. atra","T. atra","T. atra", "U. cylindrica","V. lacunosa")#
+text.pos<-c(0.5,1,0.5,0.5,1,0.5,0.5,2.5,0.5,0.5,0.5,0.5,0.5,1,0.5,1,0.5,1.0,0.5,2.5,0.5,0.5,0.5,0.5,0.5)##
+#----------#
+# 10.2 Make function to simplify#
+#----------#
+base.for.circos<-function()#
+{#
+	#------------------#
+	# Initialize#
+	#------------------#
+	circos.initialize(1:25,xlim=c(0,1))#
+	#------------------#
+	# Start text#
+	#------------------#
+	circos.trackPlotRegion(ylim=c(0,1), track.height=0.1,bg.col=NA,bg.border=NA)#
+	j<-0#
+	for (i in c(1,2,4,5,7,8,13,14,16,18,20,24,25))#
+	{#
+	circos.text(text.pos[i],0.6,sector=i, facing="bending.inside",cex=0.7, foo[i,1],niceFacing=F,font=4)#
+	if (j!=0)#
+		{#
+		circos.lines(c(0.1,((i-j+(i-j)*0.1))),c(0.4,0.4),j)#
+		}#
+		j<-i#
+		if (j==25)#
+			{#
+			circos.lines(c(0.1,1),c(0.4,0.4),j)#
+			}#
+	}#
+	for (i in c(1:25)[infected==1])#
+	{#
+	circos.text(0.5,-0.1,sector=i, facing="bending.inside",cex=0.6, foo[i,2],niceFacing=F,font=3)#
+	}#
+	#------------------#
+	# Samples#
+	#------------------#
+	circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.col=colorinos,bg.border=infected)#
+	for (i in 1:25)	circos.text(0.5,0.5,sector=i, cex=0.8, facing="bending.inside", foo[i,3])#
+}#
+#------------------------------------#
+##
+# 11. Start Circos Tremellomycetes#
+##
+#------------------------------------
+#--------------------------------------#
+#------------------------------------#
+##
+#15. Start Circos LICHENICOLES#
+##
+#------------------------------------#
+##
+circos.initialize(1:25,xlim=c(0,1))
+# Start text#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.1,bg.col=NA,bg.border=NA)#
+##
+j<-0#
+for (i in c(1,2,4,5,7,8,13,14,16,18,20,24,25))#
+{#
+circos.text(text.pos[i],0.8,sector=i, facing="bending.inside",cex=0.7, foo[i,1],niceFacing=F,font=4)#
+if (j!=0)#
+	{#
+	circos.lines(c(0.1,((i-j+(i-j)*0.1))),c(0.4,0.4),j)#
+	}#
+	j<-i#
+	if (j==25)#
+		{#
+		circos.lines(c(0.1,1),c(0.4,0.4),j)#
+		}#
+}#
+for (i in c(1:25)[infected==1])#
+{#
+circos.text(0.5,-0.1,sector=i, facing="bending.inside",cex=0.6, foo[i,2],niceFacing=F,font=3)#
+}
+##
+##
+# Start Plot connectors#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.col=colorinos,bg.border=infected)#
+for (i in 1:25)	circos.text(0.5,0.5,sector=i, cex=0.8, facing="bending.inside", foo[i,3])
+#NEW Sector percentage of shared reads#
+#-------#
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.border=F)#
+for (i in rownames(reads.foo))#
+{	circos.polygon(c(0,reads.foo[i,1],reads.foo[i,1],0), c(0,0,1,1), sector.index = i,col=colorinos.trans[as.numeric(i)],border=F)#
+	circos.polygon(c(reads.foo[i,1],reads.foo[i,1]+reads.foo[i,2],reads.foo[i,1]+reads.foo[i,2],reads.foo[i,1]), c(0,0,1,1), sector.index = i,col=colorinos[as.numeric(i)],border=F)#
+}
+starting.points
+starting.points[starting.points[,2]%in%c(21,34,18,32,17,46,33,10,12),]
+starting.trem<-starting.points[starting.points[,2]%in%c(21,34,18,32,17,46,33,10,12),]#
+index<-c(1:25)#
+	for (i in 1:25)#
+	{#
+		lilo<-cumsum(starting.trem[starting.trem[,1]==i,3])#
+		if(length(lilo)>1)#
+		{#
+		starting.trem[starting.trem[,1]==i,4]<-c(0,lilo[1:(length(lilo)-1)])#
+		starting.trem[starting.trem[,1]==i,5]<-lilo#
+		}#
+		if(length(lilo)==1)#
+		{#
+		starting.trem[starting.trem[,1]==i,4]<-0#
+		starting.trem[starting.trem[,1]==i,5]<-lilo#
+		}#
+	}#
+	for (i in 1:(length(index)-1))#
+	{#
+		for (j in (i+1):length(index))#
+		{#
+		uno<-starting.trem[starting.trem[,1]==index[i],]#
+		dos<-starting.trem[starting.trem[,1]==index[j],]#
+		tres<-uno[,2][uno[,2]%in%dos[,2]]#
+		for (k in tres)#
+			{#
+				if (uno[uno[,2]==k,3]>=dos[dos[,2]==k,3]) {colorin<-colorinos.trans[index[i]]}#
+				if (uno[uno[,2]==k,3]<dos[dos[,2]==k,3]) {colorin<-colorinos.trans[index[j]]}#
+				circos.link(index[i],as.numeric(as.vector(uno[uno[,2]==k,c(4,5)])),index[j],as.numeric(as.vector(dos[dos[,2]==k,c(4,5)])),col=colorin)		#
+			}#
+		rm(uno,dos,tres)#
+		}#
+	}#
+#
+text(-0.8,1,"Non_lichen_OTUs",cex=1.3,font=4)
+pdf("/Volumes/Dropbox/Dropbox/ANTONIA/4_FInal_Revision/Fig4new_lichenicoles.pdf")
+dev.off()
+pdf("/Volumes/Dropbox/Dropbox/ANTONIA/4_FInal_Revision/Fig4new_lichenicoles.pdf")
+##
+#END CIRCOS#
+#--------------------------------------#
+#------------------------------------#
+##
+#15. Start Circos LICHENICOLES#
+##
+#------------------------------------#
+##
+circos.initialize(1:25,xlim=c(0,1))#
+# Start text#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.1,bg.col=NA,bg.border=NA)#
+##
+j<-0#
+for (i in c(1,2,4,5,7,8,13,14,16,18,20,24,25))#
+{#
+circos.text(text.pos[i],0.8,sector=i, facing="bending.inside",cex=0.7, foo[i,1],niceFacing=F,font=4)#
+if (j!=0)#
+	{#
+	circos.lines(c(0.1,((i-j+(i-j)*0.1))),c(0.4,0.4),j)#
+	}#
+	j<-i#
+	if (j==25)#
+		{#
+		circos.lines(c(0.1,1),c(0.4,0.4),j)#
+		}#
+}#
+for (i in c(1:25)[infected==1])#
+{#
+circos.text(0.5,-0.1,sector=i, facing="bending.inside",cex=0.6, foo[i,2],niceFacing=F,font=3)#
+}#
+#
+##
+##
+# Start Plot connectors#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.col=colorinos,bg.border=infected)#
+for (i in 1:25)	circos.text(0.5,0.5,sector=i, cex=0.8, facing="bending.inside", foo[i,3])#
+#------#
+#NEW Sector percentage of shared reads#
+#-------#
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.border=F)#
+for (i in rownames(reads.foo))#
+{	circos.polygon(c(0,reads.foo[i,1],reads.foo[i,1],0), c(0,0,1,1), sector.index = i,col=colorinos.trans[as.numeric(i)],border=F)#
+	circos.polygon(c(reads.foo[i,1],reads.foo[i,1]+reads.foo[i,2],reads.foo[i,1]+reads.foo[i,2],reads.foo[i,1]), c(0,0,1,1), sector.index = i,col=colorinos[as.numeric(i)],border=F)#
+}#
+starting.trem<-starting.points[starting.points[,2]%in%c(21,34,18,32,17,46,33,10,12),]#
+index<-c(1:25)#
+	for (i in 1:25)#
+	{#
+		lilo<-cumsum(starting.trem[starting.trem[,1]==i,3])#
+		if(length(lilo)>1)#
+		{#
+		starting.trem[starting.trem[,1]==i,4]<-c(0,lilo[1:(length(lilo)-1)])#
+		starting.trem[starting.trem[,1]==i,5]<-lilo#
+		}#
+		if(length(lilo)==1)#
+		{#
+		starting.trem[starting.trem[,1]==i,4]<-0#
+		starting.trem[starting.trem[,1]==i,5]<-lilo#
+		}#
+	}#
+	for (i in 1:(length(index)-1))#
+	{#
+		for (j in (i+1):length(index))#
+		{#
+		uno<-starting.trem[starting.trem[,1]==index[i],]#
+		dos<-starting.trem[starting.trem[,1]==index[j],]#
+		tres<-uno[,2][uno[,2]%in%dos[,2]]#
+		for (k in tres)#
+			{#
+				if (uno[uno[,2]==k,3]>=dos[dos[,2]==k,3]) {colorin<-colorinos.trans[index[i]]}#
+				if (uno[uno[,2]==k,3]<dos[dos[,2]==k,3]) {colorin<-colorinos.trans[index[j]]}#
+				circos.link(index[i],as.numeric(as.vector(uno[uno[,2]==k,c(4,5)])),index[j],as.numeric(as.vector(dos[dos[,2]==k,c(4,5)])),col=colorin)		#
+			}#
+		rm(uno,dos,tres)#
+		}#
+	}#
+#
+text(-0.8,1,"Lichenicolous fungi1",cex=1.3,font=4)#
+##
+#
+#------------------------------------#
+##
+#17.2 Second plot LICHENICOLES#
+##
+#------------------------------------#
+##
+circos.initialize(1:25,xlim=c(0,1))#
+# Start text#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.1,bg.col=NA,bg.border=NA)#
+##
+j<-0#
+for (i in c(1,2,4,5,7,8,13,14,16,18,20,24,25))#
+{#
+circos.text(text.pos[i],0.8,sector=i, facing="bending.inside",cex=0.7, foo[i,1],niceFacing=F,font=4)#
+if (j!=0)#
+	{#
+	circos.lines(c(0.1,((i-j+(i-j)*0.1))),c(0.4,0.4),j)#
+	}#
+	j<-i#
+	if (j==25)#
+		{#
+		circos.lines(c(0.1,1),c(0.4,0.4),j)#
+		}#
+}#
+for (i in c(1:25)[infected==1])#
+{#
+circos.text(0.5,-0.1,sector=i, facing="bending.inside",cex=0.6, foo[i,2],niceFacing=F,font=3)#
+}#
+#
+##
+##
+# Start Plot connectors#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.col=colorinos,bg.border=infected)#
+for (i in 1:25)	circos.text(0.5,0.5,sector=i, cex=0.8, facing="bending.inside", foo[i,3])#
+#------#
+#NEW Sector percentage of shared reads#
+#-------#
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.border=F)#
+for (i in rownames(reads.foo))#
+{	circos.polygon(c(0,reads.foo[i,1],reads.foo[i,1],0), c(0,0,1,1), sector.index = i,col=colorinos.trans[as.numeric(i)],border=F)#
+	circos.polygon(c(reads.foo[i,1],reads.foo[i,1]+reads.foo[i,2],reads.foo[i,1]+reads.foo[i,2],reads.foo[i,1]), c(0,0,1,1), sector.index = i,col=colorinos[as.numeric(i)],border=F)#
+}#
+# Option 1 Averaged Threshold#
+# starting.trem<-starting.trem[starting.trem[,3]>0.0022,]#
+# Option 2 Specific Threshold per sample#
+starting.trem<-starting.trem[starting.trem$value>foo.exclude[starting.trem$Var1],]#
+	for (i in 1:(length(index)-1))#
+	{#
+		for (j in (i+1):length(index))#
+		{#
+		uno<-starting.trem[starting.trem[,1]==index[i],]#
+		dos<-starting.trem[starting.trem[,1]==index[j],]#
+		tres<-uno[,2][uno[,2]%in%dos[,2]]#
+		for (k in tres)#
+			{#
+				if (uno[uno[,2]==k,3]>=dos[dos[,2]==k,3]) {colorin<-colorinos.trans[index[i]]}#
+				if (uno[uno[,2]==k,3]<dos[dos[,2]==k,3]) {colorin<-colorinos.trans[index[j]]}#
+				circos.link(index[i],as.numeric(as.vector(uno[uno[,2]==k,c(4,5)])),index[j],as.numeric(as.vector(dos[dos[,2]==k,c(4,5)])),col=colorin)		#
+			}#
+		rm(uno,dos,tres)#
+		}#
+	}#
+#
+text(-0.8,1,"Lichenicolous fungi",cex=1.3,font=4)#
+##
+dev.off()
+quit()
+foo.exclude
+exclude.lichens<-seq.dataset[liq.ds==1,]
+exclude.lichens
+exclude.lichens[exclude.lichens[,1]=="Aspi_myr+N+A420",]
+exclude.lichens<-data.frame(exclude.lichens)
+exclude.lichens
+exclude.lichens$size<-as.numeric(as.matrix(exclude.lichens$size))
+exclude.lichens
+exclude.lichens<-aggregate(size~sample+OTU,exclude.lichens,sum)
+exclude.lichens
+names(exclude.lichens)[3]<-"size"
+exclude.lichens
+exclude.lichens[3]
+exclude.lichens<-exclude.lichens[-c(1:4),]
+exclude.lichens
+exclude.lichens<-aggregate(size~sample,exclude.lichens,mean)
+exclude.lichens
+rownames(exclude.lichens)<-exclude.lichens[,1]
+subset.reads
+library(circlize)
+circos.initialize(1:25,xlim=c(0,1))#
+# Start text#
+##
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.1,bg.col=NA,bg.border=NA)#
+##
+j<-0#
+for (i in c(1,2,4,5,7,8,13,14,16,18,20,24,25))#
+{#
+circos.text(text.pos[i],0.8,sector=i, facing="bending.inside",cex=0.7, foo[i,1],niceFacing=F,font=4)#
+if (j!=0)#
+	{#
+	circos.lines(c(0.1,((i-j+(i-j)*0.1))),c(0.4,0.4),j)#
+	}#
+	j<-i#
+	if (j==25)#
+		{#
+		circos.lines(c(0.1,1),c(0.4,0.4),j)#
+		}#
+}#
+for (i in c(1:25)[infected==1])#
+{#
+circos.text(0.5,-0.1,sector=i, facing="bending.inside",cex=0.6, foo[i,2],niceFacing=F,font=3)#
+}#
+#
+##
+##
+# Start Plot connectors
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.col=colorinos,bg.border=infected)#
+for (i in 1:25)	circos.text(0.5,0.5,sector=i, cex=0.8, facing="bending.inside", foo[i,3])
+circos.trackPlotRegion(ylim=c(0,1), track.height=0.05,bg.border=F)#
+for (i in rownames(reads.foo))#
+{	circos.polygon(c(0,reads.foo[i,1],reads.foo[i,1],0), c(0,0,1,1), sector.index = i,col=colorinos.trans[as.numeric(i)],border=F)
+}
+reads.foo
+seq.subset
+head(seq.subset)
+head(seq.dataset)
+aggregate(size~class,seq.dataset,mean)
+aggregate(size~class,seq.dataset,as.numeric(sum))
+aggregate(as.numeric(size)~class,seq.dataset)
+borrame<-as.dataframe(seq.dataset)
+borrame<-data.frame(seq.dataset)
+borrame
+head(seq.dataset)
+borrame<-data.frame(seq.dataset[,c(3,17)])
+borrame
+head(borrame)
+aggregate(size~class,borrame,sum)
+borrame$size
+borrame$size<-as.numeric(borrame$size)
+borrame
+head(borrame)
+borrame<-data.frame(seq.dataset[,c(3,17)])
+head(borrame)
+borrame$size<-as.numeric(as.character(borrame$size))
+head(borrame)
+aggregate(size~class,borrame,sum)
+sum(borrame$size)
+aggregate(size~class,borrame,sum/107418)
+aggregate(size~class,borrame,sum)
+borrame<-aggregate(size~class,borrame,sum)
+borrame$size<-borrame$size/107418
+borrame
+borrame<-aggregate(size~class,borrame,sum)
+borrame<-data.frame(seq.dataset[,c(3,17)])
+borrame$size<-as.numeric(as.character(borrame$size))
+borrame
+borrame<-aggregate(size~class,borrame,sum)
+borrame
+borrame$size<-borrame$size/1074.18
+borrame
+borrame$size
+round(borrame$size,digits=2)
+borrame<-data.frame(seq.subset[,c(3,17)])
+borrame$size<-as.numeric(as.character(borrame$size))
+borrame<-aggregate(size~class,borrame,sum)
+borrame
+sum(borrame$size)
+borrame$size<-borrame$size/463.98
+borrame
+unipartite.all
+unipartite.all<-mat.or.vec(25,25)#
+for (i in 1:25)#
+{#
+	for (j in 1:25)#
+		{#
+			unipartite.all[i,j]<-sum(starting.points[starting.points$Var1==i,][starting.points[starting.points$Var1==i,2]%in%starting.points[starting.points$Var1==j,2],3])#
+		}#
+}#
+#
+for (i in 1:25)#
+{#
+		unipartite.all[i,i]<-0#
+		for (j in 1:25)#
+		{#
+			unipartite.all[i,j]<-unipartite.all[j,i]<-unipartite.all[i,j]*unipartite.all[j,i]#
+		}#
+}#
+#
+pipi<-cbind(PDI(unipartite.all),0)#
+unip<-networklevel(unipartite.all)
+library(bipartite)
+unipartite.all<-mat.or.vec(25,25)#
+for (i in 1:25)#
+{#
+	for (j in 1:25)#
+		{#
+			unipartite.all[i,j]<-sum(starting.points[starting.points$Var1==i,][starting.points[starting.points$Var1==i,2]%in%starting.points[starting.points$Var1==j,2],3])#
+		}#
+}#
+#
+for (i in 1:25)#
+{#
+		unipartite.all[i,i]<-0#
+		for (j in 1:25)#
+		{#
+			unipartite.all[i,j]<-unipartite.all[j,i]<-unipartite.all[i,j]*unipartite.all[j,i]#
+		}#
+}#
+#
+pipi<-cbind(PDI(unipartite.all),0)#
+unip<-networklevel(unipartite.all)
+unip
+pipi
+unipartite.all
+ls
+ls()
+96*10000*20
+96*10000*25
+96*10000*25/348
+96*10000*25/384
+96*10000/384
+96*10000*25/(384*50)
+setwd('/Volumes/Dropbox/Dropbox/ANTONIA/2_Not_collapsed/7C_Alltogether')
+library(knitr)
+knit('/Volumes/Dropbox/Dropbox/ANTONIA/2_Not_collapsed/7C_Alltogether/Report_V3.Rtex')

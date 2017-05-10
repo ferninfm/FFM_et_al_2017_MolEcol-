@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {2}Quality assesment and depth of the dataset used}{2}
+\contentsline {section}{\numberline {3}Taxonomic profile of the samples}{4}
+\contentsline {subsection}{\numberline {3.1}Division}{4}
+\contentsline {subsection}{\numberline {3.2}Classes}{7}
+\contentsline {subsection}{\numberline {3.3}Orders}{8}
+\contentsline {subsection}{\numberline {3.4}Families}{9}
+\contentsline {section}{\numberline {4}Diversity Patterns}{10}
+\contentsline {subsection}{\numberline {4.1}OTU Diversity and rarefaction curves}{10}

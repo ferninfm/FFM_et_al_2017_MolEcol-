@@ -1,0 +1,110 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\begin{document}
+	\title{
+	{Supplementary material for the manuscript}\\
+	{\large Analysis of lichenicolous fungal communities based on ITS1 Amplicon Sequencing data}\\
+	}
+}
+\author{Antonia Fleischhacker, Fernando Fernandez-Mendoza, Lucia Muggia}
+\date{\today}
+\maketitle
+\tableofcontents
+\section{Introduction}
+ After all reads were quality filtered and clusterd using a 97\% similarity treshold to incorporate more sequencing error than it is included in simple dereplication approaches,
+ all Analyses were run using two separate workflows. First we used a straightforward approach in which sequences were BLASTED against nr database
+ and subsequently analysed in MEGAN to obtain a wide taxonomic profile based on LCA estimates. Secondly we used a more thorough approach in which we filtered out 
+ and extracted the ITS1 fragment using the program ITSx, clustered the ITS1 fragments using SWARM, blasted them to the UNITE database of fungal ribosomal DNA
+ and finally summarized the BLAST output using a custom script in R
+
+\section{Quality assesment and depth of the dataset used}
+Analyses carried out in MEGAN including all quality filtered and dereplicated amplicons.\\
+Each sequence may include more an incomplete 5' fraction of SSU, including type I intronic sequences when present, ITS1 and 5.8S. When the type I intron is present the sequence of ITS1 is eaither partial or non existent.
+Unknown and Bacterial sequences are further interpreted as "unknown/unused". 
+
+<<1_Intro fig.height=5, echo=FALSE, messages=FALSE, include=FALSE>>=
+setwd("/Users/Fernando/Dropbox/ANTONIA/2_Not_collapsed/7C_Alltogether/")
+load("Corrected_Final_Workspace")
+source("functions.r")
+@
+
+<<2_Intro fig.height=5, echo=8:9, messages=FALSE, prompt=FALSE, fig.lp="fig:", fig.cap='Cositas de Megan'>>=
+foo.megan<-paste(seq.dataset[,8],taxonomia[,1],sep="_")
+foo.megan<-gsub("0_Bacteria","Excluded",foo.megan)
+foo.megan<-gsub("1_Bacteria","Excluded",foo.megan)
+foo.megan<-gsub("1_Unknown","Excluded",foo.megan)
+foo.megan<-gsub("0_Unknown","Excluded",foo.megan)
+foo.megan<-gsub("0_Fungi","Used Fungal sequences",foo.megan)
+foo.megan<-gsub("1_Fungi","Host lichen sequences",foo.megan)
+megan.subset<-seq.dataset[foo.megan=="Used Fungal sequences",]
+megan.taxonomia<-taxonomia[foo.megan=="Used Fungal sequences",]
+#
+opla3<-tabulate.and.print(data=cbind(seq.dataset[,1:3],foo.megan),samples=1, groups=4, titulo="Excluded reads MEGAN", n.cols=1,normalize=FALSE,extra=scale_fill_manual(values=c("#E69F00","#56B4E9","#999999"), name=""), ,reorder=TRUE,niveles=c("Used Fungal sequences","Host lichen sequences","Excluded"))
+#
+#opla4<-tabulate.and.print(data=cbind(seq.dataset[,1:3],foo.megan),samples=1, groups=4,titulo="Percentage of fungal reads MEGAN", n.cols=1,normalize=TRUE,extra=scale_fill_manual(values=c("#999999", "#56B4E9","#E69F00"), name=""))
+print(opla3[[2]])
+#print(opla4[[2]])
+@
+
+Representation of the dataset after being processes using ITSx. Sequences excluded because the do not contain ITS1 fractions are
+gruped as 11. 01 refers to sequences excluded for the analyses which contain ITS1 but are positively identified as belonging to one of the studied lichen hosts. 00 is the fraction of sequences included.
+
+<<3_Introitsx, fig.height=5, echo=FALSE, messages=FALSE, errors=FALSE, fig.lp="fig:", fig.cap='Cositas de ITSx'>>=
+opla1<-tabulate.and.print(data=exclude,groups=8, counts=2,titulo="Ammount of reads per sample and excluded reads its/lichen", normalize=FALSE, n.cols=1, extra=scale_fill_manual(values=c("#E69F00", "#56B4E9","#999999"), name="", breaks=c("11", "01", "00"),labels=c("No fungal ITS1", "Host/Lichen ITS1", "Usable")))
+#opla2<-tabulate.and.print(data=exclude,groups=8, counts=2,titulo="Percentage of excluded reads its/lichen", n.cols=1, extra=scale_fill_manual(values=c("#E69F00", "#56B4E9","#999999"), name="", breaks=c("11", "01", "00"),labels=c("No fungal ITS1", "Host/Lichen ITS1", "Used")))
+print(opla1[[2]])
+#print(opla2[[2]])
+@
+
+\section{Taxonomic profile of the samples}
+<<foo15, fig.height=5>>=
+opla1<-tabulate.and.print(groups=15, category="Division",normalize=FALSE,n.col=1)
+opla2<-tabulate.and.print(groups=15, category="Division", n.col=1)
+opla3<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,2]),samples=1, groups=4,category="Division", n.cols=1,normalize=FALSE)
+opla4<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,2]),samples=1, groups=4,category="Division", n.cols=1,normalize=TRUE)
+
+print(opla1[[2]])
+print(opla2[[2]])
+print(opla3[[2]])
+print(opla4[[2]])
+@
+
+<<foo17, fig.height=5>>=
+opla1<-tabulate.and.print(groups=17,, category="Class", n.col=2)
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,3]),samples=1, groups=4,category="Class", n.cols=2,normalize=TRUE)
+print(opla1[[2]])
+print(opla2[[2]])
+@
+
+<<foo19, fig.height=5>>=
+opla1<-tabulate.and.print(groups=19, , category="Order", n.col=2)
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,4]),samples=1, groups=4,category="Order", n.cols=2,normalize=TRUE)
+print(opla1[[2]])
+print(opla2[[2]])
+@
+
+<<foo21, fig.height=5>>=
+opla1<-tabulate.and.print(groups=21, , category="Family")
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,5]),samples=1, groups=4,category="Family", n.cols=2,normalize=TRUE)
+print(opla1[[2]])
+print(opla2[[2]])
+@
+
+\section{Classification based on OTU composition}
+
+<<fooTree, fig.height=6>>=
+library(vegan)
+library(vegetarian)
+table.otus.2<-table.otus[,colSums(table.otus)>1]
+table.otus.2[,]<-normalize.rows(table.otus.2)
+tree<-hclust(vegdist(table.otus.2))
+rownames(Samples)<-Samples[,1]
+tree$labels<-paste(Samples[tree$labels,1],Samples[tree$labels,2],Samples[tree$labels,3])
+library(ggdendro)
+ggdendrogram(tree, rotate = TRUE, size = 2)
+@
+
+
+\end{document}

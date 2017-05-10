@@ -1,0 +1,16 @@
+dataset.tremellomycetes<-
+seq.dataset[seq.dataset[,17]=="Tremellomycetes"|taxonomia[,3]=="Tremellomycetes",c(1,2,5,10)]
+for (i in names(table(seq.dataset[seq.dataset[,10]=="NO_OTU",5])))
+	{
+	if (is.null(dim(seq.dataset[seq.dataset[,5]==i,])))
+		{
+		seq.dataset[seq.dataset[,5]==i,10]<-seq.dataset[seq.dataset[,5]==i,][2]
+		}else{
+		seq.dataset[seq.dataset[,5]==i,10]<-seq.dataset[seq.dataset[,5]==i,][1,2]
+	}
+}
+
+dataset.tremellomycetes<-
+seq.dataset[seq.dataset[,17]=="Tremellomycetes"|taxonomia[,3]=="Tremellomycetes",c(1,2,5,10)]
+seqs[dataset.tremellomycetes[!duplicated(dataset.tremellomycetes[,4]),4]]
+write.dna(seqs[dataset.tremellomycetes[!duplicated(dataset.tremellomycetes[,4]),4]],"~/Desktop/ANTONIA/2_Not_collapsed/7C_Alltogether/SMALL_TREMELLOMYCETES.fas",format="fasta",nbcol=-1,colsep="")

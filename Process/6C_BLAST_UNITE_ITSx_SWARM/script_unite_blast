@@ -1,0 +1,55 @@
+#!/bin/bash
+#batch blastn
+
+#echo "blasting file $file to UNITE"
+blastn -db /Users/Fernando/Desktop/ANTONIA/0_databases/Unite_INDSC/UNITE_public_02.03.2015 -query /Users/Fernando/Desktop/ANTONIA/2_Not_collapsed/6C_BLAST_UNITE_ITSx_SWARM/ITS1_OTUs -out  /Users/Fernando/Desktop/ANTONIA/2_Not_collapsed/6C_BLAST_UNITE_ITSx_SWARM/ITS1_OTUs_Blast.txt -num_threads 4 -evalue 0.0005 -outfmt 10
+##Parse input
+#python process.py
+## Correct file eliminating spaces
+#sed -i bp 's/ //g' ./Processed_Blast_Unite_OTUS.txt
+##Feed chunks to R
+#cp ./Processed_Blast_Unite_OTUS.txt ./foo.txt
+for otu in $(seq 8711 24960)
+do
+	var="$(grep "^OTU_$(($otu+1));" -m 1 -n ./foo.txt |cut -f1 -d:)"
+	var=$(($var-1))
+	ref="1"
+	if [ $(($var)) -gt $(($ref)) ]
+	then
+		echo "Ahora escribo con head"
+		head -n $var ./foo.txt>OTU_$otu.txt
+		echo "Ahora sed de 1 a $var"
+		sed -i bp "1,${var}d" ./foo.txt	
+	else
+		echo "Somehow $otu had no blast hits"
+	fi
+done
+#
+#
+#
+#
+#
+#do
+#	echo "Blasting $otu"
+#	grep "^OTU_$otu;" -m 3000 ./foo.txt>OTU_$otu.txt
+#	if [ $otu = 24960 ]
+#		then
+#	    echo "$otu is the last one"
+#		mv ./foo.txt ./OTU_$otu.txt
+#	else
+#		echo "Enter else $otu is done, subsetting foo"
+#		#first="$(grep "^OTU_$otu;" -m 1 -n ./foo.txt |cut -f1 -d:)"
+#		last="$(grep "^OTU_$(($otu+1));" -m 1 -n ./foo.txt |cut -f1 -d:)"
+#		last=$(($last-1))
+#		if [$last>1]
+#			then
+#			echo "Ahora sed de 1 a $last"
+#			sed -i bp "1,${last}d" ./foo.txt
+#		else
+#			echo "Somehow $otu had no blast hits"
+#		fi
+#	 fi
+#done
+## Clean Scape characters
+##for file in OTU_*.txt; do sed -i bp 's/#/X/g' $file; done; rm *.txtbp
+#

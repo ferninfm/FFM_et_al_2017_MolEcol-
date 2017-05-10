@@ -1,0 +1,4 @@
+import blastFile='/Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/blast_v3/OutA832.unique.filtered.fa.txt' fastaFile='/Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/blast_v3/A832.unique.filtered.fa' meganFile='/Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/blast_v3/megan2_A832.unique.filtered.fa.rma' minScore=200 topPercent=5 minSupport=1 blastFormat=BlastN
+export what=paths file= '/Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/blast_v3/Taxonomy_A832.unique.filtered.fa.txt'
+quit
+

@@ -1,0 +1,35 @@
+#Read seqs per sample
+library(ape)
+out<-NULL
+for (file in c("A032","A138","A172","A194","A227","A229","A243","A280","A360","A361","A368","A405","A418","A420","A434","A440","A476","A482","A608","A622","A623","A636","A670","A792","A809","A832"))
+{
+foo<-read.dna(paste("/Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/1_Input_unique_filtered_fasta/",file,".unique.filtered.fa",sep=""),format="fasta")
+foo<-cbind(names(foo),file)
+out<-rbind(out,foo)
+}
+#
+# Get a single reference per cluster and grep it to the cluster table
+#
+otus<-readLines("~/Desktop/ANTONIA/2_Not_collapsed/5B_Cluster_UCLUST/uclust_results.txt")
+out2<-out
+for (i in 1:dim(out2)[1])
+{
+out2[i,1]<-grep(unlist(strsplit(out[i]," "))[1],otus)
+}
+# Process the cluster table
+parsed.otus<-mat.or.vec(length(otus),4)
+colnames(parsed.otus)<-c("Ref","size","Sequences","OTU","Probability","Alternative")
+for (i in 1:length(otus))
+	{
+	foo<-unlist(strsplit(otus[[i]],"\t"))
+	if (length(foo)==5)
+		{
+		parsed.otus[i,c(4,5)]<-c(foo[c(5,3)])
+		}
+	if (length(foo)==6)
+		{
+		parsed.otus[i,c(4,5,6)]<-c(foo[c(5,3,6)])
+		}
+	foo<-unlist(strsplit(otus[[i]],";"))
+	parsed.otus[i,c(1,2,3)]<-c(foo[1],substring(foo[2],5),foo[3])
+	}

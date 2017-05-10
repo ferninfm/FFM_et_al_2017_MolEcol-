@@ -1,0 +1,192 @@
+@Creator	MEGAN (version 5.2.1, built 24 Mar 2014)
+@CreationDate	Wed May 10 10:48:33 CEST 2017
+@ContentType	Summary4
+@Names	megan2_A832.unique.filtered.fa	megan2_A032.unique.filtered.fa	megan2_A138.unique.filtered.fa	megan2_A172.unique.filtered.fa	megan2_A194.unique.filtered.fa	megan2_A227.unique.filtered.fa	megan2_A229.unique.filtered.fa	megan2_A243.unique.filtered.fa	megan2_A280.unique.filtered.fa	megan2_A360.unique.filtered.fa	megan2_A361.unique.filtered.fa	megan2_A368.unique.filtered.fa	megan2_A405.unique.filtered.fa	megan2_A418.unique.filtered.fa	megan2_A420.unique.filtered.fa	megan2_A434.unique.filtered.fa	megan2_A440.unique.filtered.fa	megan2_A476.unique.filtered.fa	megan2_A482.unique.filtered.fa	megan2_A608.unique.filtered.fa	megan2_A622.unique.filtered.fa	megan2_A623.unique.filtered.fa	megan2_A636.unique.filtered.fa	megan2_A670.unique.filtered.fa	megan2_A792.unique.filtered.fa	megan2_A809.unique.filtered.fa
+@Uids	1430125282505	1430124325766	1430124363246	1430124384161	1430124415725	1430124460702	1430124510354	1430124546104	1430124578753	1430124655474	1430124714499	1430124798714	1430124819049	1430124836486	1430124855750	1430124871860	1430124892638	1430124916867	1430124938729	1430124974147	1430125023300	1430125087900	1430125114048	1430125140080	1430125186904	1430125229451
+@Sizes	698	1316	405	847	1261	1897	1100	933	2567	2061	2070	283	149	291	122	359	373	357	1061	959	1541	544	648	1176	1052	1739
+@TotalReads	25809
+@AdditionalReads	0
+@Collapse	Taxonomy	2	28384	12884	2157	12908	10239	2759
+@Parameters	mode=absolute
+@NodeStyle	Taxonomy	PieChart
+TAX	43220	0	0	0	0	0	0	0	1
+TAX	2	0	0	0	0	0	0	0	0	1
+TAX	1547232	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	2	0	0	0	1
+TAX	87286	0	0	0	0	1
+TAX	43219	0	1	5	0	0	2	1	99	6	3	0	0	0	0	0	0	0	32	0	1	1	1	5	124	5
+TAX	468092	0	0	0	0	4
+TAX	388435	0	0	6	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	2	1	343
+TAX	1585407	5	0	0	0	0	0	0	0	0	13
+TAX	81064	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	452563	0	0	0	0	0	0	0	0	1
+TAX	5219	0	0	0	0	0	0	0	0	1
+TAX	4890	0	54	1	1	0	1	0	15	25	110	10	0	0	2	0	13	3	3	0	0	2	0	1	1	0	421
+TAX	1507913	0	0	0	0	0	3	0	0	157	0	0	0	0	0	0	0	0	0	0	0	2
+TAX	157822	0	0	0	0	0	0	43	2	0	1	0	0	0	0	0	0	0	18	0	0	0	0	0	0	40
+TAX	117544	0	3
+TAX	129387	0	0	0	0	0	0	3	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	87265	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	172634	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	752608	0	0	0	0	0	0	0	0	0	12
+TAX	176458	0	0	0	0	0	0	0	0	0	0	0	6	0	0	0	5
+TAX	87270	4	9	0	0	0	1	0	0	2	0	2	0	0	1	99	6	0	0	1	504	2	0	0	3	1	1
+TAX	258247	10	4	0	0	0	0	0	0	0	0	0	5
+TAX	1460112	0	0	0	0	0	0	0	0	0	2
+TAX	87275	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	2
+TAX	87274	0	1
+TAX	933209	0	0	0	0	0	0	0	0	1
+TAX	815	0	0	0	0	0	0	0	0	0	0	0	0	2
+TAX	172629	1	0	0	0	0	0	4
+TAX	1176992	0	0	0	0	0	0	0	1	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	1
+TAX	172628	1
+TAX	-2	161	474	35	108	300	584	98	176	383	597	611	44	27	131	17	134	201	58	430	415	315	36	44	357	206	74
+TAX	-1	0	1	1	5	45	0	0	1	1	2	0	0	0	0	0	0	0	0	1	0	0	0	1	31
+TAX	929398	0	1	15	13	0	0	0	15	3	50	32	0	0	0	0	16	7	3	4	1	2	0	3	2	4	725
+TAX	387598	0	1
+TAX	1041184	0	0	0	0	0	0	0	0	1
+TAX	408822	0	0	0	0	0	0	0	7
+TAX	82105	0	2	1	0	0	0	0	4	0	0	0	0	0	0	0	0	0	1	0	0	0	0	1	13
+TAX	134362	0	13	0	0	0	1	0	0	2	28	0	0	0	0	0	0	6	0	0	0	37	0	0	28
+TAX	88631	0	0	0	0	0	0	0	1
+TAX	640380	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0	1	0	0	0	82
+TAX	84742	0	0	0	0	0	0	0	0	1
+TAX	640383	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	8
+TAX	355688	0	0	0	0	0	0	0	0	1
+TAX	5204	0	6	0	0	0	0	0	2	8	0	0	0	0	0	0	3	4	0	0	0	0	1	0	1	1
+TAX	640371	0	0	0	0	0	0	0	2
+TAX	34395	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2
+TAX	570526	0	0	0	0	0	0	0	2	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2
+TAX	279011	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	15	0	0	0	0	1
+TAX	55193	0	0	0	0	0	0	0	0	1
+TAX	108946	0	0	5	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	426	0	0	0	0	59
+TAX	88641	0	14	2	695	777	4	3	3	4	1	1	0	120	0	2	5	9	0	0	0	1	13	0	2	0	2
+TAX	88642	0	9	0	0	1
+TAX	108950	0	4	0	0	0	1282	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	7
+TAX	1198938	0	2	0	0	0	0	0	2
+TAX	1301	0	1
+TAX	5178	0	0	0	0	0	1
+TAX	160979	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	734	0	0	0	0	1
+TAX	153505	0	0	0	0	0	0	0	0	2
+TAX	1206327	0	8
+TAX	1540867	0	0	0	0	1
+TAX	108937	0	0	0	0	0	0	0	14	0	0	0	0	0	27	0	2	0	1
+TAX	108942	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	273118	0	2
+TAX	1198964	0	0	0	0	0	0	0	6	0	230	0	0	0	0	0	18	0	0	3	0	0	0	1	17
+TAX	237584	0	0	0	0	0	0	0	0	0	4
+TAX	237585	0	0	0	0	0	0	0	1	0	3
+TAX	286563	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	2
+TAX	860655	0	3	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	557	1	1
+TAX	1176480	0	0	0	0	0	0	0	0	1
+TAX	1177580	0	5	30	16	1	0	0	3	164	10	1	0	0	0	0	0	2	0	0	0	4	1	0	5	1	1
+TAX	143893	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	8
+TAX	112498	0	0	0	0	0	0	0	0	1
+TAX	838	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	668547	0	0	0	0	0	0	0	0	3
+TAX	836	0	0	0	0	0	0	0	1
+TAX	39933	0	0	2	0	0	0	7	409	0	537	0	0	0	115	0	4	0	2	101	0	1	0	10	176	13	3
+TAX	41254	0	0	0	0	3	0	0	0	0	4	0	0	0	0	0	0	0	0	0	0	312	0	0	3
+TAX	2759	0	3	0	0	0	1	3	5	2	0	2	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	4974	0	0	0	0	0	0	0	0	1
+TAX	39934	495	58	0	0	0	4	0	31	3	9	6	228	0	1	0	44	0	0	30	0	0	0	1	247	1
+TAX	5351	2	0	0	0	0	0	0	0	1
+TAX	4751	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	155619	0	4	0	0	0	0	0	0	2	0	0	0	0	0	0	1
+TAX	155616	0	1
+TAX	104397	0	0	0	0	0	0	0	3
+TAX	716546	0	4	0	0	0	0	0	11	4	1	1	0	0	0	0	1	0	1	0	0	1	1	1	0	3
+TAX	716545	0	2
+TAX	247144	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	4530	0	1
+TAX	170006	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	2
+TAX	1332276	0	0	0	1	0	0	827	0	1	15	0	0	0	0	0	0	0	170	0	0	12	4
+TAX	57687	0	0	15	4	9	5	4	47	297	334	507	0	0	7	0	57	93	47	62	0	5	3	12	43	211	17
+TAX	1263791	0	0	1
+TAX	78060	2	0	0	0	0	0	17	0	0	1	0	0	0	0	0	0	0	3	0	0	0	0	0	0	13
+TAX	264804	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	5607	0	0	0	0	0	1
+TAX	146292	0	0	0	0	11
+TAX	5600	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	9606	0	0	0	0	0	0	0	0	2
+TAX	4998	0	0	0	0	0	1
+TAX	470130	0	0	0	0	0	0	0	7	33	6	1	0	0	0	0	14	0	0	0	0	2
+TAX	265084	0	0	0	0	0	0	0	0	0	1
+TAX	80757	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	5314	0	3
+TAX	433	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	706557	0	0	0	0	0	0	0	0	0	7
+TAX	386627	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	1127810	0	0	0	0	0	0	0	0	0	0	0	0	0	3
+TAX	93133	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	6
+TAX	933101	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	1
+TAX	743110	0	0	0	0	1
+TAX	5583	0	0	0	0	0	0	0	1
+TAX	93125	0	0	1	4	6	1	0	2	1304	6	889	0	0	0	0	0	38	0	0	0	7	1	0	0	0	454
+TAX	5338	0	3	0	0	0	0	0	0	3
+TAX	40469	1	0	0	0	0	0	0	1
+TAX	387269	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	34476	0	0	0	0	0	1
+TAX	86620	0	0	2	0	0	0	26	0	0	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0	151
+TAX	29465	0	0	0	0	0	0	0	1
+TAX	1414641	0	0	0	0	0	0	0	0	0	12
+TAX	47058	0	0	0	0	0	0	0	0	1
+TAX	235862	0	0	0	0	0	0	4
+TAX	145978	0	1
+TAX	483450	0	0	0	0	0	0	0	11	0	0	0	0	0	0	0	0	2	0	0	0	0	2	1
+TAX	5303	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	2
+TAX	92860	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	387281	0	0	283	0	0	1	0	0	4	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	15
+TAX	353147	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	98781	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	352877	0	0	0	0	0	0	27	0	0	0	0	0	0	0	0	0	0	9	0	0	0	0	0	0	2
+TAX	358640	0	0	0	0	0	0	0	1
+TAX	1397036	0	0	0	0	0	0	0	0	2
+TAX	1591221	0	0	0	0	0	0	32	0	0	2	0	0	0	0	0	0	0	0	0	0	0	478	0	0	27
+TAX	111842	0	0	0	0	0	0	0	3	0	19	0	0	0	2	0	3	0	2	0	0	0	0	1	5
+TAX	646005	0	0	0	0	86	0	1	0	0	1
+TAX	5117	0	2
+TAX	620827	0	586	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	451867	13	19	0	0	1	0	0	23	132	32	5	0	0	0	0	28	3	1	0	0	3	0	0	39	1
+TAX	451864	1	0	0	0	0	1	0	8	0	1	0	0	0	0	0	0	1	0	0	0	0	0	1
+TAX	451870	1	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	147538	0	1	0	0	0	1	0	1
+TAX	1049288	0	0	0	0	0	0	0	0	0	3	2	0	0	1	0	0	0	0	1	0	0	0	0	0	0	38
+TAX	83467	0	0	0	0	0	0	0	1	1
+TAX	1049289	0	1
+TAX	86085	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	147541	0	0	0	0	0	0	0	4	2	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	1111111	0	3
+TAX	574655	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1
+TAX	147547	1	0	0	0	4	0	0	0	0	0	0	0	0	0	2	0	0	0	0	18	0	0	0	1	1
+TAX	147545	0	0	0	0	4	0	0	0	0	1
+TAX	66513	0	3
+TAX	147548	0	0	0	0	0	0	0	2
+TAX	139415	0	1
+END_OF_DATA_TABLE
+#SampleID	@Source	Size
+megan2_A832.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A832.unique.filtered.fa.rma	698
+megan2_A032.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A032.unique.filtered.fa.rma	1316
+megan2_A138.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A138.unique.filtered.fa.rma	405
+megan2_A172.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A172.unique.filtered.fa.rma	847
+megan2_A194.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A194.unique.filtered.fa.rma	1261
+megan2_A227.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A227.unique.filtered.fa.rma	1897
+megan2_A229.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A229.unique.filtered.fa.rma	1100
+megan2_A243.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A243.unique.filtered.fa.rma	933
+megan2_A280.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A280.unique.filtered.fa.rma	2567
+megan2_A360.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A360.unique.filtered.fa.rma	2061
+megan2_A361.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A361.unique.filtered.fa.rma	2070
+megan2_A368.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A368.unique.filtered.fa.rma	283
+megan2_A405.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A405.unique.filtered.fa.rma	149
+megan2_A418.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A418.unique.filtered.fa.rma	291
+megan2_A420.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A420.unique.filtered.fa.rma	122
+megan2_A434.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A434.unique.filtered.fa.rma	359
+megan2_A440.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A440.unique.filtered.fa.rma	373
+megan2_A476.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A476.unique.filtered.fa.rma	357
+megan2_A482.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A482.unique.filtered.fa.rma	1061
+megan2_A608.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A608.unique.filtered.fa.rma	959
+megan2_A622.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A622.unique.filtered.fa.rma	1541
+megan2_A623.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A623.unique.filtered.fa.rma	544
+megan2_A636.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A636.unique.filtered.fa.rma	648
+megan2_A670.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A670.unique.filtered.fa.rma	1176
+megan2_A792.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A792.unique.filtered.fa.rma	1052
+megan2_A809.unique.filtered.fa	/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Process/3A_Megan/1_Megan_files/megan2_A809.unique.filtered.fa.rma	1739

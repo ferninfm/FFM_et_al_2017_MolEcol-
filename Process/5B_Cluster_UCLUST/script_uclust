@@ -1,0 +1,19 @@
+#!/bin/bash
+#Rscript uclust_rename.r
+#batch blastn
+# Set a variable to give a short name for the USEARCH binary
+u=/Applications/1_genomics/usearch
+# Variable for directory containing input data (reads and ref. db)
+d=/Users/ferninfm/Desktop/ANTONIA/2_Not_collapsed/5B_Cluster_UCLUST
+# OTU clustering
+echo "Hola"
+$u -cluster_otus All_renamed.fa -otus otus_all.fa -sizeout -relabel OTU_ -uparseout uclust_results.txt
+
+# Map reads (including singletons) back to OTUs
+$u -usearch_global All_renamed.fa -db  otus_all.fa -strand plus -id 0.97 -uc otu.map.uc
+
+# Assign taxonomy to the OTUs
+#$u -utax otus_all.fa -db rdp_16s -strand both -taxconfs rdp_16s_short.tc -utaxout tax.txt
+
+# Create OTU table
+python ~/py/uc2otutab.py otu.map.uc > otu_table.txt
