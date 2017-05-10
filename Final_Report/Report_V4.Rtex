@@ -1,0 +1,1511 @@
+\documentclass[a4paper, 11]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage}
+\usepackage{pdflscape}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{longtable}
+%\usepackage{showframe}
+\graphicspath{ {images/} }
+\begin{document}
+	\title{
+	{Supplementary material for the manuscript}\\
+	{\large Trophic structure of lichen-associated fungi in an alpine community of rock-inhabiting lichens}\\
+	}
+\author{Fernando FERNÁNDEZ-MENDOZA, Antonia FLEISCHHACKER, Theodora KOPUN,\\ Martin GRUBE, Lucia MUGGIA}
+\date{\today}
+\maketitle
+\tableofcontents{}
+\newpage
+\section{Methodologic pipeline}
+\begin{figure}[p]
+  \centering
+    \includegraphics[width=\textwidth]{supplement_fig1.pdf}
+  \caption{Schematic representation of the analytical pipeline. Files referred by filename can be found on the gitHub repository. Main pipeline is highlighted green and green names in italics highlight the main resulting data structures. Taxonomic filtering was done manually and included multiple manual and semiautomated validation steps.}
+  \label{fig:supplement_fig1}
+\end{figure}
+\newpage
+\section{Quality assesment and depth of the dataset used}
+%--------------------------------%
+%                                %
+% INTRODUCTION                   %
+%                                %
+%--------------------------------%
+<<1_Intro, fig.height=5, echo=FALSE, messages=FALSE, prompt=FALSE, fig.lp="fig:", fig.cap='Cositas de Megan'>>=
+load("/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/Workspace_corrected_V4")
+library(knitr)
+library(xtable)
+library(ggplot2)
+library(grid)
+source("/Volumes/Dropbox/Dropbox/11_Github_repositories/FFM_et_al_2017/FFM_et_al_2017/functions.r")
+# RENAME MEGAN
+foo.megan<-paste(exclude[,8],taxonomia[,1],sep="_")
+foo.megan<-gsub("[0-9]+_Bacteria","Excluded",foo.megan)
+foo.megan<-gsub("000_Unknown","Unknown",foo.megan)
+#foo.megan<-gsub("100_Unknown","Excluded",foo.megan)
+foo.megan<-gsub("100_Unknown","Unknown",foo.megan)
+foo.megan<-gsub("001_Unknown","Excluded",foo.megan)
+foo.megan<-gsub("101_Unknown","Excluded",foo.megan)
+foo.megan<-gsub("[0-9]11_Unknown","Host lichen sequences",foo.megan)
+foo.megan<-gsub("100_Fungi","Used Fungal sequences",foo.megan)
+#foo.megan<-gsub("100_Fungi","Excluded",foo.megan)
+foo.megan<-gsub("101_Fungi","Excluded",foo.megan)
+foo.megan<-gsub("001_Fungi","Excluded",foo.megan)
+foo.megan<-gsub("000_Fungi","Used Fungal sequences",foo.megan)
+foo.megan<-gsub("011_Fungi","Host lichen sequences",foo.megan)
+foo.megan<-gsub("111_Fungi","Host lichen sequences",foo.megan)
+#----------------
+#
+# OPTIONS TO PROCESS THE FULL DATASET
+# 1. Including all host sequences
+# megan.subset<-seq.dataset
+# megan.taxonomia<-taxonomia
+#
+# 2. Excluding all samples of lichenized fungi common in the community 
+megan.subset<-seq.dataset[foo.megan%in%c("Used Fungal sequences","Unknown"),]
+megan.taxonomia<-taxonomia[foo.megan%in%c("Used Fungal sequences","Unknown"),]
+#
+#
+#
+
+opla3<-tabulate.and.print(data=cbind(seq.dataset[,1:3],foo.megan),samples=1, groups=4, titulo="", n.cols=1,normalize=FALSE,flip=TRUE, print=FALSE, extra=scale_fill_manual(values=c("#E69F00","#56B4E9","#999999"), name=""),reorder=TRUE, niveles=c("Used Fungal sequences","Host lichen sequences","Excluded"))
+##opla3[[1]]<-opla3[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),]
+@
+%
+%------------------------------------------------------------------------------------------------%
+%                                                                                                %
+% 2nd CHUNK GETS AN OVERVIEW OF THE ITS1 DATASET AND PLOTS BOTH DATASETS IN ONE PLOT             %
+%                                                                                                %
+%------------------------------------------------------------------------------------------------%
+% 
+<<2_IntroAllNormalized, fig.height=6, echo=FALSE, messages=FALSE, errors=FALSE, fig.pos='H', fig.lp="fig:", fig.cap='Overview of the trimmed (ITS1) and untrimmed datasets. The bars show the Proportion of reads per sample, and color codes the sequences that were included and excluded in each analysis'>>=
+# 
+opla1<-tabulate.and.print(data=exclude,groups=8, counts=2,titulo="Percentage of reads per sample included in the ITS dataset and excluded", normalize=TRUE, n.cols=1, flip=TRUE, print=FALSE, extra=scale_fill_manual(values=c("#E69F00","#AA9F00","#56B4E9","#777777","#999999","#CCCCCC"), name="", breaks=c("000", "001", "011","100", "101", "111"),labels=c("ITS1_Used","ITS1_Lichens","ITS1_Lichen_Host","Non_ITS1_Other","Non_ITS1_Lichens","Non_ITS1_Lichen_Host")))
+dc1<-data.frame(opla1[[1]])
+dc1<-dc1[dc1$Freq!=0,]#$
+dc1<-cbind(dc1,as.character(dc1$Var2%in%c("111","101","100")))
+colnames(dc1)[4]<-"treatment"
+levels(dc1$treatment)<-c("ITS 1","Untrimmed")
+dc2<-as.matrix(dc1$Var2)#$
+dc2<-gsub("000","ITS1 Used",dc2)
+dc2<-gsub("001","ITS1 lichens",dc2)
+dc2<-gsub("011","ITS1 Host",dc2)
+dc2<-gsub("100","Non-ITS1 other",dc2)
+dc2<-gsub("101","Non-ITS1 lichens",dc2)
+dc2<-gsub("111","Non-ITS1 Host",dc2)
+dc1$Var2<-factor(dc2, levels=c("ITS1 Used","ITS1 lichens","ITS1 Host","Non-ITS1 other","Non-ITS1 lichens","Non-ITS1 Host")) #$
+dc1$Var1<-factor(dc1$Var1,levels=rev(levels(dc1$Var1)[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])) #$
+ggplot(dc1, aes(x = factor(Var1, levels=rev(rownames(opla3[[1]])[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])), y=Freq, fill=factor(Var2), order=as.numeric(factor(Var2)))) + 	geom_bar(stat="identity",position=("stack")) + coord_flip() + theme(axis.text.y = element_text(face = "bold.italic", size = 9), legend.box="horizontal", legend.position="bottom", legend.key.height=unit(0.16,"inch"), legend.text=element_text(size=8)) + guides(fill=guide_legend(ncol=10)) + labs(x="" , y="") + facet_wrap(~ treatment) + scale_fill_manual(values=c("#E69F00","#AA9F00","#56B4E9","#E69F00","#AA9F00","#56B4E9"), name="")
+@
+%
+%
+%
+% RAW READS
+%
+%
+<<3_2_IntroReads, fig.height=6, echo=FALSE, messages=FALSE, errors=FALSE, fig.pos='H', fig.lp="fig:", fig.cap='Overview of the trimmed (ITS1) and untrimmed datasets. The bars show the numer of reads per sample, and color codes the sequences that were included and excluded in each analysis'>>=
+# Tabulate and print
+opla1<-tabulate.and.print(data=exclude,groups=8, counts=2,titulo="Ammount of reads per sample and excluded reads its/lichen", normalize=FALSE, n.cols=1, flip=TRUE, print=FALSE, extra=scale_fill_manual(values=c("#E69F00","#AA9F00","#56B4E9","#777777","#999999","#CCCCCC"), name="", breaks=c("000", "001", "011","100", "101", "111"),labels=c("ITS1_Used","ITS1_Lichens","ITS1_Lichen_Host","Non_ITS1_Other","Non_ITS1_Lichens","Non_ITS1_Lichen_Host")))
+dc1<-data.frame(opla1[[1]])
+dc1<-dc1[dc1$Freq!=0,]#$
+dc1<-cbind(dc1,as.character(dc1$Var2%in%c("111","101","100")))
+colnames(dc1)[4]<-"treatment"
+levels(dc1$treatment)<-c("ITS 1","Untrimmed")
+dc2<-as.matrix(dc1$Var2)#$
+dc2<-gsub("000","ITS1 Used",dc2)
+dc2<-gsub("001","ITS1 lichens",dc2)
+dc2<-gsub("011","ITS1 Host",dc2)
+dc2<-gsub("100","Non-ITS1 other",dc2)
+dc2<-gsub("101","Non-ITS1 lichens",dc2)
+dc2<-gsub("111","Non-ITS1 Host",dc2)
+dc1$Var2<-factor(dc2, levels=c("ITS1 Used","ITS1 lichens","ITS1 Host","Non-ITS1 other","Non-ITS1 lichens","Non-ITS1 Host")) #$
+dc1$Var1<-factor(dc1$Var1,levels=rev(levels(dc1$Var1)[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)]))
+ggplot(dc1, aes(x = factor(Var1, levels=rev(rownames(opla3[[1]])[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])), y=Freq, fill=factor(Var2), order=as.numeric(factor(Var2)))) + 	geom_bar(stat="identity",position=("stack")) + coord_flip() + theme(axis.text.y = element_text(face = "bold.italic", size = 9), legend.box="horizontal", legend.position="bottom", legend.key.height=unit(0.16,"inch"), legend.text=element_text(size=8)) + guides(fill=guide_legend(ncol=10)) + labs(x="" , y="") + facet_wrap(~ treatment) + scale_fill_manual(values=c("#E69F00","#AA9F00","#56B4E9","#E69F00","#AA9F00","#56B4E9"), name="")
+#$
+@
+%
+% 4rd CHUNK GETS AN OVERVIEW OF THE ITS1 DATASET AND PLOTS BOTH DATASETS IN ONE PLOT
+%
+% TEXT ON QUALITY OF THE DATASET
+%
+%Analyses carried out in MEGAN including all quality filtered and dereplicated amplicons.\\
+%Each sequence may include more an incomplete 5' fraction of SSU, including type I intronic sequences when present, ITS1 and 5.8S. When the type I intron is present the sequence of ITS1 is eaither partial or non existent.
+%Unknown and Bacterial sequences are further interpreted as "unknown/unused".
+%
+%Representation of the dataset after being processes using ITSx. Sequences excluded because the do not contain ITS1 fractions are
+%gruped as 11. 01 refers to sequences excluded for the analyses which contain ITS1 but are positively identified as belonging to one of the studied lichen hosts. 00 is the fraction of sequences included.\\
+\newpage
+\section{Taxonomic profile of the samples}
+\subsection{Division}
+%--------------------------------%
+%                                %
+% PLOT DIVISION COMPOSITION      %
+%                                %
+%--------------------------------%
+<<4_divisions, fig.height=6, echo=FALSE, messages=FALSE, errors=FALSE, fig.pos='H', fig.lp="fig:", fig.cap='Overview of Taxonomic composition at Division level of the untrimmed dataset (SSU, Type I intron, ITS1, 5.8S) and the ITS1 dataset.'>>=
+opla2<-tabulate.and.print(groups=15, category="Division", n.col=1, print=FALSE)
+opla4<-tabulate.and.print(data=cbind(megan.subset[,1:3],megan.taxonomia[,2]),samples=1, groups=4,category="Division", n.cols=1,normalize=TRUE, print=FALSE)
+#
+#
+dc1<-data.frame(opla2[[1]])
+dc1<-dc1[dc1$Freq!=0,]#$
+dc1<-cbind(dc1,"ITS 1")
+colnames(dc1)[4]<-"treatment"
+dc2<-data.frame(opla4[[1]])
+dc2<-dc2[dc2$Freq!=0,]#$
+dc2<-cbind(dc2,"Untrimmed")
+colnames(dc2)[4]<-"treatment"
+dc1<-rbind(dc1,dc2)
+rm(dc2)
+dc2<-as.matrix(dc1$Var2)#$
+dc2<-gsub("Unknown","Unidentified",dc2)
+dc1$Var2<-factor(dc2, levels=c("Ascomycota","Basidiomycota","Blastocladiomycota", "Chytridiomycota", "Unidentified")) #$
+dc1$Var1<-factor(dc1$Var1,levels=rev(levels(dc1$Var1)[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])) #$
+#$
+ggplot(dc1, aes(x = factor(Var1), y=Freq, fill=factor(Var2), order=as.numeric(factor(Var2)))) + 	geom_bar(stat="identity",position=("stack")) + coord_flip() + theme(axis.text.y = element_text(face = "bold.italic", size = 9), legend.box="horizontal", legend.position="bottom", legend.key.height=unit(0.16,"inch"), legend.text=element_text(size=8)) + guides(fill=guide_legend(ncol=10)) + labs(x="" , y="") + facet_wrap(~ treatment) + scale_fill_manual(values=c("#E69F00", "#56B4E9","#9e0142","#d53e4f","#999999","#f46d43","#fdae61","#fee08b","#ffffbf","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2","#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"), name="")
+#$
+@
+%----------------------------------------------%
+%                                              %
+% PLOT TABLES OF DIVISION COMPOSITION          %
+%                                              %
+%----------------------------------------------%
+<<5_DivITS, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+opla1<-tabulate.and.print(groups=15, category="Division",n.col=1,normalize=FALSE)
+opla1[[1]]<-opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),]
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,2]),samples=1, groups=4,category="Division", n.cols=1,normalize=FALSE)
+opla2[[1]]<-opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),]
+DivITS.table<-xtable(opla1[[1]], caption=c("Number of raw reads asignable to Fungal Divisions in the ITS1 dataset","Divisions ITS1"), type="latex", digits=0)
+DivITS.table[DivITS.table==0]<-"."
+print(DivITS.table, floating=TRUE,table.placement ="H", caption.placement ="top", size=10)
+@
+
+<<6_DivMEGAN, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+DivMEGAN.table<-xtable(opla2[[1]], type="latex", caption=c("Number of reads asignable to Fungal Divisions in the untrimmed dataset","Divisions MEGAN"), digits=0)
+DivMEGAN.table[DivMEGAN.table==0]<-"."
+print(DivMEGAN.table, floating=TRUE, table.placement ="H", caption.placement ="top", size=10)
+@
+\newpage
+\subsection{Classes}
+%
+% PLOT IMAGES AND TABLES OF CLASS COMPOSITION
+%
+<<7_Class, fig.height=9, fig.width='\\textwidth', echo=FALSE, messages=FALSE, errors=FALSE, fig.pos='H', fig.lp="fig:", fig.cap='Taxonomic composition at Class level of the untrimmed (SSU, Type I intron, ITS1, 5.8S) and ITS1 datasets. Normalized fractions per sample are split by dataset and Division. The minoritary Blastocladiomycota and Chytridiomycota are grouped in the "unidentified/others" category '>>=
+opla1<-tabulate.and.print(data=cbind(seq.subset,paste(seq.subset[,15],seq.subset[,17],sep="_")),groups=27, category="Class", n.col=2,print=FALSE)
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],paste(megan.taxonomia[,2],megan.taxonomia[,3],sep="_")),samples=1, groups=4,category="Class", n.cols=2,normalize=TRUE,print=FALSE)
+dc1<-data.frame(opla1[[1]])
+dc1<-dc1[dc1$Freq!=0,]#$
+dc1<-cbind(dc1,"ITS 1")
+colnames(dc1)[4]<-"treatment"
+dc2<-data.frame(opla2[[1]])
+dc2<-dc2[dc2$Freq!=0,]#$
+dc2<-cbind(dc2,"Untrimmed")
+colnames(dc2)[4]<-"treatment"
+dc1<-rbind(dc1,dc2)
+rm(dc2)
+dc2<-strsplit(as.character(dc1$Var2),split="_")#$
+foodc<-length(dc2)
+dc2<-unlist(dc2)
+dim(dc2)<-c(2,foodc)
+dc2<-t(dc2)
+dc2<-gsub("unidentified", "unidentified/other", dc2)
+dc2<-gsub("Unknown", "unidentified/other", dc2)
+dc2<-gsub("Blastocladiomycota", "unidentified/other", dc2)
+dc2<-gsub("Chytridiomycota", "unidentified/other", dc2)
+dc1$Var2<-factor(dc2[,2])#$
+dc1<-cbind(dc1,factor(dc2[,1], levels=c("Ascomycota","Basidiomycota", "unidentified/other")))
+colnames(dc1)[5]<-"division"
+dc1[is.na(dc1)]<-"unidentified/other"
+#
+# RECODE TO HAVE LESS CATEGORIES
+#
+for (i in levels(dc1$Var2)[c(2,3,8,9,10,11,12,13)])
+dc1$Var2<-gsub(i,"Other Classes",dc1$Var2)
+dc1$Var2<-gsub("unidentified/other","unidentified",dc1$Var2)#$
+dc1$Var2<-factor(dc1$Var2)
+dc1$Var2<-factor(dc1$Var2, levels=c(levels(dc1$Var2)[levels(dc1$Var2)!="unidentified"&levels(dc1$Var2)!="Other Classes"],"Other Classes","unidentified"))#$
+#
+dc1$Var1<-factor(dc1$Var1,levels=rev(levels(dc1$Var1)[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])) #$
+#
+#
+ggplot(dc1, aes(x = factor(Var1), y=Freq, fill=factor(Var2), order=as.numeric(factor(Var2)))) + 	geom_bar(stat="identity",position=("stack")) + coord_flip() + theme(axis.text.y = element_text(face = "bold.italic", size = 7), legend.box="horizontal", legend.position="bottom", legend.key.height=unit(0.16,"inch"), legend.text=element_text(size=6)) + guides(fill=guide_legend(ncol=6)) + labs(x="" , y="") + facet_grid(division~treatment) + scale_fill_manual(values=c("#BF000F","#E69F00","#B6A64D","#56B4E9","#86AD9B","#A5666B","#B2333D","#999999"),name="")
+@
+%
+% CLASS TABLES
+%
+<<8_ClasITS, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+# Take older  matrices to generate custom order
+order.opla1<-unlist(strsplit(colnames(opla1[[1]]),"_"))[1:(length(unlist(strsplit(colnames(opla1[[1]]),"_")))/2)*2]
+order.opla1<-c(order.opla1[order.opla1!="unidentified"],"unidentified")
+order.opla2<-unlist(strsplit(colnames(opla2[[1]]),"_"))[1:(length(unlist(strsplit(colnames(opla2[[1]]),"_")))/2)*2]
+order.opla2<-c(order.opla2[order.opla2!="Unknown"],"Unknown")
+#
+opla1<-tabulate.and.print(data=seq.subset,groups=17, category="Class", n.col=2,normalize=FALSE,print=FALSE)
+opla1[[1]]<-opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),]
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,3]),samples=1, groups=4,category="Class", n.cols=2,normalize=FALSE,print=FALSE)
+opla2[[1]]<-opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),]
+#
+foo17a.table<-xtable(opla1[[1]][,order.opla1], caption=c("Proportion of sequences asignable to Fungal Classes in the trimmed ITS1 dataset","Classes ITS1"), type="latex", digits=0)
+foo17a.table[foo17a.table==0]<-"."
+print(foo17a.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+@
+
+<<9_ClasMEGAN, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+clasMEGAN.table<-xtable(opla2[[1]][,order.opla2], caption=c("Proportion of sequences asignable to Fungal Classes in the Complete dataset","Classes MEGAN"), type="latex", digits=0)
+clasMEGAN.table[clasMEGAN.table==0]<-"."
+print(clasMEGAN.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+@
+%
+%
+%
+\newpage
+\subsection{Orders}
+<<10_PlotOrders, echo=FALSE, fig.height=8, fig.width='\\textwidth', fig.pos='H', fig.lp="fig:", fig.cap='Overview of Taxonomic composition at Order level split by dataset and Division.'>>=
+
+opla1<-tabulate.and.print(data=cbind(seq.subset,paste(seq.subset[,15],seq.subset[,19],sep="_"))
+		, groups=27
+		, category="Order"
+		, print=FALSE)
+
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],paste(megan.taxonomia[,2],megan.taxonomia[,4],sep="_"))
+		, samples=1
+		, groups=4
+		, category="Order"
+		, normalize=TRUE
+		, print=FALSE)
+		
+dc1<-data.frame(opla1[[1]])
+dc1<-dc1[dc1$Freq!=0,]#$
+dc1<-cbind(dc1,"ITS 1")
+colnames(dc1)[4]<-"treatment"
+dc2<-data.frame(opla2[[1]])
+dc2<-dc2[dc2$Freq!=0,]#$
+dc2<-cbind(dc2,"Untrimmed")
+colnames(dc2)[4]<-"treatment"
+dc1<-rbind(dc1,dc2)
+rm(dc2)
+dc2<-strsplit(as.character(dc1$Var2),split="_")#$
+foodc<-length(dc2)
+dc2<-unlist(dc2)
+dim(dc2)<-c(2,foodc)
+dc2<-t(dc2)
+dc2[,1]<-gsub("unidentified", "unidentified/others", dc2[,1])
+dc2[,1]<-gsub("Unknown", "unidentified/others", dc2[,1])
+dc2[,1]<-gsub("Blastocladiomycota", "unidentified/others", dc2[,1])
+dc2[,1]<-gsub("Chytridiomycota", "unidentified/others", dc2[,1])
+dc2[,2]<-gsub("Unknown", "unidentified", dc2[,2])
+dc1$Var2<-factor(dc2[,2])#$
+dc1<-cbind(dc1,factor(dc2[,1], levels=c("Ascomycota","Basidiomycota", "unidentified/others")))
+colnames(dc1)[5]<-"division"
+#dc1[is.na(dc1)]<-"unidentified/others"
+#
+# COLLAPSE MINORITARY ORDERS IN PLOT
+#
+for (i in c("Agaricales"
+			, "Auriculariales"
+			, "Blastocladiales"
+			, "Candelariales"
+			, "Cantharellales"
+			, "Corticiales"
+			, "Cystofilobasidiales"
+			, "Diaporthales"
+			, "Eurotiales"
+			, "Holtermanniales"
+			, "Hymenochaetales"
+			, "Hypocreales"
+			, "Lecideales"
+			, "Malasseziales"
+			, "Orbiliales"
+			, "Phacidiales"
+			, "Phaeomoniellales"
+			, "Polyporales"
+			, "Rhizocarpales"
+			, "Saccharomycetales"
+			, "Sebacinales"
+			, "Sporidiobolales"
+			, "Taphrinales"
+			, "Trapeliales"
+			, "Umbilicariales"))
+			{
+			dc1$Var2<-gsub(i,"Other Orders",dc1$Var2)
+			}
+dc1$Var2<-gsub("unidentified/other","unidentified",dc1$Var2)#$
+dc1$Var2<-factor(dc1$Var2)
+dc1$Var2<-factor(dc1$Var2, levels=c(levels(dc1$Var2)[levels(dc1$Var2)!="unidentified"&levels(dc1$Var2)!="Other Orders"],"Other Orders","unidentified"))#$
+#
+#
+dc1$Var1<-factor(dc1$Var1,levels=rev(levels(dc1$Var1)[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])) #$
+#
+#
+ggplot(dc1[dc1$division!="unidentified/others",], aes(x = factor(Var1), y=Freq, fill=factor(Var2), order=as.numeric(factor(Var2))))+ 	geom_bar(stat="identity", position=("stack"))+ coord_flip()+ theme(axis.text.y = element_text(face = "bold.italic", size = 6), legend.box="horizontal", legend.key.height=unit(0.16,"inch"), legend.position="bottom", legend.text=element_text(size=6))+ guides(fill=guide_legend(ncol=5))+ labs(x="" , y="")+ facet_grid(division~treatment)+ scale_fill_manual(values=c("#E69F00", "#56B4E9", "#9e0142", "#d53e4f", "#f46d43","#fdae61","#fee08b","#ffffbf","#e6f598","#abdda4","#66c2a5","#3288bd","#5e4fa2","#a6cee3","#1f78b4","#b2df8a","#e31a1c","#fb9a99","#999999","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"), name="")
+@
+%-------------------------------%
+%                               %
+% Tables Orders ITSX            %
+%                               %
+%-------------------------------%
+<<12_OrderITS, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+#
+# Take older  matrices to generate custom order
+#
+order.opla1<-unlist(strsplit(colnames(opla1[[1]]),"_"))[1:(length(unlist(strsplit(colnames(opla1[[1]]),"_")))/2)*2]
+order.opla1<-c(order.opla1[order.opla1!="unidentified"],"unidentified")
+#
+opla1<-tabulate.and.print(data=seq.subset,groups=19, category="Order", n.col=2,normalize=FALSE,print=FALSE)
+opla1[[1]]<-opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),order.opla1]
+
+#
+a12.table<-xtable(opla1[[1]][,c(1:18)], caption=c("Proportion of sequences asignable to Fungal Orders in the trimmed ITS1 dataset (Part I)","Order ITS1 I"), type="latex", digits=0)
+a12.table[a12.table==0]<-"."
+print(a12.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+#
+b12.table<-xtable(opla1[[1]][,-c(1:18)], caption=c("Proportion of sequences asignable to Fungal Orders the trimmed ITS1 dataset (Part II)","Order ITS1 II"), type="latex", digits=0)
+b12.table[b12.table==0]<-"."
+print(b12.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+@
+\newpage
+%
+% Tables Orders MEGAN
+%
+<<13_OrderMEGAN, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+#
+# RESort Columns
+order.opla2<-unlist(strsplit(colnames(opla2[[1]]),"_"))[1:(length(unlist(strsplit(colnames(opla2[[1]]),"_")))/2)*2]
+order.opla2<-c(order.opla2[order.opla2!="Unknown"],"Unknown")
+#
+opla2<-tabulate.and.print(data=cbind(megan.subset[,1:3],megan.taxonomia[,4]),samples=1, groups=4,category="Order", n.cols=2,normalize=FALSE)
+opla2[[1]]<-opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),order.opla2]
+#
+a13.table<-xtable(opla2[[1]][,c(1:18)], caption=c("Proportion of sequences asignable to Fungal Orders in the untrimmed dataset (Part I)","Orders MEGAN I"), type="latex", digits=0)
+a13.table[a13.table==0]<-"."
+print(a13.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+#
+
+b13.table<-xtable(opla2[[1]][,-c(1:18)]
+	, caption=c("Proportion of sequences asignable to Fungal Orders in the untrimmed dataset  (Part II)","Orders MEGAN II")
+	, type="latex"
+	, digits=0)
+	
+b13.table[b13.table==0]<-"."
+
+print(b13.table
+	, floating.environment='sidewaystable'
+	, floating=TRUE
+	, table.placement ="b"
+	, caption.placement ="top"
+	, rotate.colnames=TRUE
+	, size=8)
+@
+\subsection{Families}
+%
+% PLOT OF FAMILY ASCRIPTION
+%
+<<14_PlotFamilies, echo=FALSE, fig.height=9, fig.pos='H', fig.lp="fig:", fig.cap='Overview of Taxonomic composition at Family level split by dataset and Division. Minoritary Families within Asco and Basidiomycota were recoded as "other" for graphical simplicity. Full Results can be found in tables X:Y'>>=
+opla1<-tabulate.and.print(data=cbind(seq.subset,paste(seq.subset[,15],seq.subset[,21],sep="_"))
+	, groups=27
+	, category="Order"
+	, n.col=2
+	, print=FALSE)
+	
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],paste(megan.taxonomia[,2],megan.taxonomia[,5],sep="_"))
+	, samples=1
+	, groups=4
+	, category="Order"
+	, n.cols=2
+	, normalize=TRUE
+	, print=FALSE)
+	
+dc1<-data.frame(opla1[[1]])
+dc1<-dc1[dc1$Freq!=0,]#$
+dc1<-cbind(dc1,"ITS 1")
+colnames(dc1)[4]<-"treatment"
+dc2<-data.frame(opla2[[1]])
+dc2<-dc2[dc2$Freq!=0,]#$
+dc2<-cbind(dc2,"Complete")
+colnames(dc2)[4]<-"treatment"
+dc1<-rbind(dc1,dc2)
+rm(dc2)
+dc2<-strsplit(as.character(dc1$Var2),split="_")#$
+foodc<-length(dc2)
+dc2<-unlist(dc2)
+dim(dc2)<-c(2,foodc)
+dc2<-t(dc2)
+dc2[,1]<-gsub("unidentified", "unidentified/others", dc2[,1])
+dc2[,1]<-gsub("Unknown", "unidentified/others", dc2[,1])
+dc2[,1]<-gsub("Blastocladiomycota", "unidentified/others", dc2[,1])
+dc2[,1]<-gsub("Chytridiomycota", "unidentified/others", dc2[,1])
+dc2[,2]<-gsub("Unknown", "unidentified", dc2[,2])
+dc1$Var2<-factor(dc2[,2])#$
+dc1<-cbind(dc1,factor(dc2[,1], levels=c("Ascomycota","Basidiomycota", "unidentified/others")))
+colnames(dc1)[5]<-"division"
+#dc1[is.na(dc1)]<-"unidentified/others"
+#$
+# COLLAPSE MINORITARY FAMILIES
+#
+for (i in c("Acarosporaceae"
+		, "Agaricaceae"
+		, "Aspergillaceae"
+		, "Candelariaceae"
+		, "Catenariaceae"
+		, "Chaetothyriaceae"
+		, "Chionosphaeraceae"
+		, "Cladoniaceae"
+		, "Coriolaceae"
+		, "Corticiaceae"
+		, "Cortinariaceae"
+		, "Cyphellophoraceae"
+		, "Cystofilobasidiaceae"
+		, "Davidiellaceae"
+		, "Dermateaceae"
+		, "Didymellaceae"
+		, "Dothioraceae"
+		, "Exidiaceae"
+		, "Filobasidiaceae"
+		, "Fomitopsidaceae"
+		, "Ganodermataceae"
+		, "Helotiaceae"
+		, "Hemiphacidiaceae"
+		, "Hyaloscyphaceae"
+		, "Hydnaceae"
+		, "Hymenochaetaceae"
+		, "Lecideaceae"
+		, "Leptosphaeriaceae"
+		, "Malasseziaceae"
+		, "Marasmiaceae"
+		, "Megasporaceae"
+		, "Melanommataceae"
+		, "Meruliaceae"
+		, "Mycenaceae"
+		, "Ophiocordycipitaceae"
+		, "Ophioparmaceae"
+		, "Orbiliaceae"
+		, "Peniophoraceae"
+		, "Phacidiaceae"
+		, "Phaeosphaeriaceae"
+		, "Physalacriaceae"
+		, "Pleurotaceae"
+		, "Polyporaceae"
+		, "Psathyrellaceae"
+		, "Pseudoperisporiaceae"
+		, "Rhizocarpaceae"
+		, "Rhytismataceae"
+		, "Rutstroemiaceae"
+		, "Schizoporaceae"
+		, "Sclerotiniaceae"
+		, "Sebacinaceae"
+		, "Stereaceae"
+		, "Strophariaceae"
+		, "Sympoventuriaceae"
+		, "Taphrinaceae"
+		, "Thelebolaceae"
+		, "Trapeliaceae"
+		, "Tremellaceae"
+		, "Trichocomaceae"
+		, "Tricholomataceae"
+		, "Umbilicariaceae"
+		, "Valsaceae"
+		, "Venturiaceae"
+		, "Vuilleminiaceae"))
+			{
+			dc1$Var2<-gsub(i,"Other Families",dc1$Var2)
+			}
+dc1$Var2<-factor(dc1$Var2)
+dc1$Var2<-factor(dc1$Var2, levels=c(levels(dc1$Var2)[levels(dc1$Var2)!="unidentified"&levels(dc1$Var2)!="Other Families"],"Other Families","unidentified"))
+#
+#
+dc1$Var1<-factor(dc1$Var1,levels=rev(levels(dc1$Var1)[c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26)])) #$
+#
+#
+#
+colores.fer.out<-colores.fer(dc1$Var2,y=dc1$Freq,others="Other Families",ui="unidentified")
+mof<-ggplot(dc1[dc1$division!="unidentified/others",] , aes(x = factor(Var1) , y=Freq , fill=factor(Var2) , order=as.numeric(factor(Var2)))) + geom_bar(stat="identity",position=("stack")) + coord_flip() + theme(axis.text.y = element_text(face = "bold.italic", size = 6) , legend.box="horizontal" , legend.key.height=unit(0.16,"inch") , legend.position="bottom" , legend.text=element_text(size=6)) + guides(fill=guide_legend(ncol=5)) + labs(x="" , y="") + facet_grid(division~treatment) + scale_fill_manual(values=colores.fer.out[levels(dc1$Var2)], name="")
+#
+print(mof)
+#+theme(legend.position="none"))
+#
+@
+%<<14_PlotFamilieslegend, echo=FALSE, fig.height=4, fig.width=4, fig.pos='H'>>=
+%plot(g_legend(mof))
+%@
+\newpage
+%
+% TABLE FAMILIES ITS1
+%
+<<15_FamilyITS, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+#
+# Take older  matrices to generate custom order
+#
+order.opla1<-unlist(strsplit(colnames(opla1[[1]]),"_"))[1:(length(unlist(strsplit(colnames(opla1[[1]]),"_")))/2)*2]
+order.opla1<-c(order.opla1[order.opla1!="unidentified"],"unidentified")#
+#
+opla1<-tabulate.and.print(groups=21, , category="Family", normalize=FALSE, print=FALSE)
+foo17a.table<-xtable(opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),c(1:18)], , caption=c("Proportion of sequences asignable to Fungal Families the trimmed ITS1 dataset (Part I)","Families ITS1 I"), type="latex", digits=0)
+#
+foo17a.table[foo17a.table==0]<-"."
+print(foo17a.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+#
+foo17a.table<-xtable(opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),c(19:37)], , caption=c("Proportion of sequences asignable to Fungal Families the trimmed ITS1 dataset (Part II)","Families ITS1 II"), type="latex", digits=0)
+#
+foo17a.table[foo17a.table==0]<-"."
+print(foo17a.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+#
+foo17a.table<-xtable(opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),c(38:54)], , caption=c("Proportion of sequences asignable to Fungal Families the trimmed ITS1 dataset (Part III)","Families ITS1 III"), type="latex", digits=0)
+#
+foo17a.table[foo17a.table==0]<-"."
+print(foo17a.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+#
+foo17a.table<-xtable(opla1[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),-c(1:54)], , caption=c("Proportion of sequences asignable to Fungal Families the trimmed ITS1 dataset (Part IV)","Families ITS1 IV"), type="latex", digits=0)
+#
+foo17a.table[foo17a.table==0]<-"."
+print(foo17a.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames='TRUE', size=8)
+@
+\newpage
+%
+% TABLE FAMILIES MEGAN
+%
+<<16_FamilyMEGAN, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+#
+# RESort Columns
+order.opla2<-unlist(strsplit(colnames(opla2[[1]]),"_"))[1:(length(unlist(strsplit(colnames(opla2[[1]]),"_")))/2)*2]
+order.opla2<-c(order.opla2[order.opla2!="Unknown"],"Unknown")
+#
+opla2<-tabulate.and.print(data=cbind( megan.subset[,1:3],megan.taxonomia[,5]),samples=1, groups=4,category="Family", n.cols=5, normalize=FALSE, legend.pos="bottom")
+foo17b.table<-xtable(opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),c(1:18)], caption=c("Proportion of sequences asignable to Fungal Families in the untrimmed dataset (Part I)","Families ITS1 I"), type="latex", digits=0)
+foo17b.table[foo17b.table==0]<-"."
+print(foo17b.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+#
+foo17b.table<-xtable(opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),c(19:37)], caption=c("Proportion of sequences asignable to Fungal Families in the untrimmed dataset (Part II)","Families ITS1 II"), type="latex", digits=0)
+foo17b.table[foo17b.table==0]<-"."
+print(foo17b.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+#
+foo17b.table<-xtable(opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),c(38:54)], caption=c("Proportion of sequences asignable to Fungal Families in the untrimmed  dataset (Part III)","Families ITS1 III"), type="latex", digits=0)
+foo17b.table[foo17b.table==0]<-"."
+print(foo17b.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+#
+foo17b.table<-xtable(opla2[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),-c(1:54)], caption=c("Proportion of sequences asignable to Fungal Families in the untrimmed  dataset (Part IV)","Families ITS1 IV"), type="latex", digits=0)
+foo17b.table[foo17b.table==0]<-"."
+print(foo17b.table, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+@
+\newpage
+\section{Diversity Patterns}
+\subsection{OTU Diversity and rarefaction curves}
+<<rarefact, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Rarefaction curves of OTU richness per samples. All singletons were included.'>>=
+library(reshape2)
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=5, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][,order(as.numeric(colnames(otu.table[[1]])))]
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+alpha<-rarefaction(otu.table[[1]],subsample=150)
+#
+#
+# PLOT RESULTS
+#
+#
+# Dataframe to ggplot
+dc<-cbind(melt(alpha$richness),melt(alpha$SE))[,c(3,1,2,5)]
+colnames(dc)<-c("rarefy","sample","metric","SE")
+dc<-dc[!is.na(dc$metric),]
+variable.treatment<-as.matrix(dc$sample)
+variable.treatment[-(grep("+N+",variable.treatment))]<-"Infected"
+variable.treatment[grep("+N+",variable.treatment)]<-"Not infected"
+ciMult <- qt(0.95/2 + .5, 9) #datac$N-1)
+dc<-cbind(dc,factor(variable.treatment),dc$metric+(ciMult*dc$SE),dc$metric-(ciMult*dc$SE))#$
+colnames(dc)[5:7]<-c("treatment","ci.min","ci.max")
+# ggplot
+pd <- position_dodge(0.1)
+hulls<-rbind(dc[,c(1,2,5,6)],setNames(dc[length(dc[,1]):1,c(1,2,5,7)],names(dc[,c(1,2,5,6)])))
+#
+#
+#
+# Make Dummy Variable for plotting
+#
+#
+#
+element<-as.matrix(hulls[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+hulls<-cbind(hulls,"sub.set"=element)
+#
+element<-as.matrix(dc[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+dc<-cbind(dc,"sub.set"=element)
+#
+#
+#
+p1<-ggplot(dc,aes(x=rarefy, y=metric, fill=sample, colour=sample))
+#p1<-p1 + geom_errorbar(data=dc,aes(ymin=ci.min, ymax=ci.max), width=.1, position=pd)
+p1<-p1 + geom_polygon(data=hulls,
+	aes(
+		y=ci.min,
+			x=rarefy,
+			order=rownames(data),
+				fill=sample,
+				colour=NULL),
+				width=0.5,
+				position="identity",
+				alpha=0.4)
+p1<-p1 + geom_line(data=dc,aes(x=rarefy, y=metric, fill=sample, colour=sample), position=pd)
+#p1<-p1 + geom_point(position=pd)
+p1<-p1 + labs (x="Number of reads", y="Mean OTU Richness") + theme_bw() + theme(
+			legend.box="horizontal",
+			legend.position="bottom",
+			legend.title=element_blank(),
+			legend.text=element_text(size=6),
+			legend.key.height=unit(0.16,"inch"),
+			legend.text=element_text(size=8))
+p1<-p1 + guides(fill=guide_legend(ncol=6))
+p1<-p1 + facet_grid(sub.set~treatment)	
+print(p1)
+@
+%
+%
+<<rarefact1a, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Average rarefied OTU Richness per treatment. All singletons were included.'>>=
+#
+alpha.n<-alpha$richness[,c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+alpha.i<-alpha$richness[,-c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.n<-alpha$SE[,c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.n<-sqrt(rowSums(SE.n^2))
+SE.i<-alpha$SE[,-c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.i<-sqrt(rowSums(SE.i^2))
+counts.n<-rowSums(!is.na(alpha.n))
+counts.i<-rowSums(!is.na(alpha.i))
+alpha.n<-rowMeans(alpha.n,na.rm=T)
+alpha.i<-rowMeans(alpha.i,na.rm=T)
+#
+#
+alpha.plot<-data.frame(rbind(cbind(alpha.n,alpha.n-(1.96*SE.n),alpha.n+(1.96*SE.n),as.numeric(alpha$subsample),0),cbind(alpha.i,alpha.i-(1.96*SE.i),alpha.i+(1.96*SE.i),as.numeric(alpha$subsample),1)))
+names(alpha.plot)<-c("alpha","cilow","cihigh","sequences","treatment")
+alpha.plot<-alpha.plot[-c(131:134),]
+p.alpha<-ggplot(alpha.plot,aes(x=as.numeric(sequences), y=as.numeric(alpha), ymin=as.numeric(cilow), ymax=as.numeric(cihigh), fill=as.factor(treatment), colour=as.factor(treatment)))
+p.alpha<-p.alpha+geom_point()+geom_errorbar()
+#
+# P on the difference of the means
+#
+z.test<-mat.or.vec(length(alpha.n),2)
+for (i in 1:length(alpha.n))
+{
+z.test[i,1]<-(alpha.n[i]-alpha.i[i])/sqrt(
+(((SE.n[i]^2)/counts.n[i])+((SE.i[i]^2)/counts.i[i])))
+z.test[i,2]<-2*pnorm(-abs(z.test[i,1]))
+}
+z.test<-data.frame(z.test)
+z.test<-cbind(z.test,as.numeric(alpha$subsample))#$
+names(z.test)<-c("X1","X2","X3")
+z.test<-z.test[-c(1,64,65,66,67),]
+p.z<-ggplot(data=z.test,aes(x=X3, y=X1, fill=as.factor((z.test[,2]<=0.05)), colour=as.factor((z.test[,2]<=0.05))))
+multiplot(p.alpha+
+    theme(legend.position="bottom"),p.z+geom_point()+
+    theme(legend.position="bottom"),cols=2)
+@
+
+
+<<rarefact2, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Rarefaction curves of OTU richness per samples. All singletons were excluded.'>>=
+library(reshape2)
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=5, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][,order(as.numeric(colnames(otu.table[[1]])))]
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+otu.table[[1]]<-otu.table[[1]][,colSums(otu.table[[1]])!=1]
+alpha<-rarefaction(otu.table[[1]],subsample=150)
+#
+#
+# PLOT RESULTS
+#
+#
+# Dataframe to ggplot
+dc<-cbind(melt(alpha$richness),melt(alpha$SE))[,c(3,1,2,5)]
+colnames(dc)<-c("rarefy","sample","metric","SE")
+dc<-dc[!is.na(dc$metric),]
+variable.treatment<-as.matrix(dc$sample)
+variable.treatment[-(grep("+N+",variable.treatment))]<-"Infected"
+variable.treatment[grep("+N+",variable.treatment)]<-"Not infected"
+ciMult <- qt(0.95/2 + .5, 9) #datac$N-1)
+dc<-cbind(dc,factor(variable.treatment),dc$metric+(ciMult*dc$SE),dc$metric-(ciMult*dc$SE))#$
+colnames(dc)[5:7]<-c("treatment","ci.min","ci.max")
+# ggplot
+pd <- position_dodge(0.1)
+hulls<-rbind(dc[,c(1,2,5,6)],setNames(dc[length(dc[,1]):1,c(1,2,5,7)],names(dc[,c(1,2,5,6)])))
+#
+#
+#
+# Make Dummy Variable for plotting
+#
+#
+#
+element<-as.matrix(hulls[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+hulls<-cbind(hulls,"sub.set"=element)
+#
+element<-as.matrix(dc[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+dc<-cbind(dc,"sub.set"=element)
+#
+#
+#
+p1<-ggplot(dc,aes(x=rarefy, y=metric, fill=sample, colour=sample))
+#p1<-p1 + geom_errorbar(data=dc,aes(ymin=ci.min, ymax=ci.max), width=.25, position=pd)
+p1<-p1 + geom_polygon(data=hulls,
+	aes(
+		y=ci.min,
+			x=rarefy,
+			order=rownames(data),
+				fill=sample,
+				colour=NULL),
+				width=0.5,
+				position="identity",
+				alpha=0.4)
+p1<-p1 + geom_line(data=dc,aes(x=rarefy, y=metric, fill=NULL, colour=sample), position=pd)
+#p1<-p1 + geom_point(position=pd)
+p1<-p1 + labs (x="Number of reads", y="Mean OTU Richness") + theme_bw() + theme(
+			legend.box="horizontal",
+			legend.position="bottom",
+			legend.title=element_blank(),
+			legend.text=element_text(size=6),
+			legend.key.height=unit(0.16,"inch"),
+			legend.text=element_text(size=8))
+p1<-p1 + guides(fill=guide_legend(ncol=6))
+p1<-p1 + facet_grid(sub.set~treatment) 		
+print(p1)
+@
+<<rarefact2a, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Average rarefied OTU Richness per treatment. All singletons were excluded.'>>=
+#
+#
+#
+alpha.n<-alpha$richness[,c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+alpha.i<-alpha$richness[,-c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.n<-alpha$SE[,c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.n<-sqrt(rowSums(SE.n^2))
+SE.i<-alpha$SE[,-c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.i<-sqrt(rowSums(SE.i^2))
+counts.n<-rowSums(!is.na(alpha.n))
+counts.i<-rowSums(!is.na(alpha.i))
+alpha.n<-rowMeans(alpha.n,na.rm=T)
+alpha.i<-rowMeans(alpha.i,na.rm=T)
+#
+#
+alpha.plot<-data.frame(rbind(cbind(alpha.n,alpha.n-(1.96*SE.n),alpha.n+(1.96*SE.n),as.numeric(alpha$subsample),0),cbind(alpha.i,alpha.i-(1.96*SE.i),alpha.i+(1.96*SE.i),as.numeric(alpha$subsample),1)))
+names(alpha.plot)<-c("alpha","cilow","cihigh","sequences","treatment")
+alpha.plot<-alpha.plot[-c(131:134),]
+p.alpha<-ggplot(alpha.plot,aes(x=as.numeric(sequences), y=as.numeric(alpha), ymin=as.numeric(cilow), ymax=as.numeric(cihigh), fill=as.factor(treatment), colour=as.factor(treatment)))
+p.alpha<-p.alpha+geom_point()+geom_errorbar()
+#+ facet_wrap(~ treatment) + scale_fill_manual(values=c("#E69F00", "#56B4E9")))
+#
+# P on the difference of the means
+#
+#
+z.test<-mat.or.vec(length(alpha.n),2)
+for (i in 1:length(alpha.n))
+{
+z.test[i,1]<-(alpha.n[i]-alpha.i[i])/sqrt(
+(((SE.n[i]^2)/counts.n[i])+((SE.i[i]^2)/counts.i[i])))
+z.test[i,2]<-2*pnorm(-abs(z.test[i,1]))
+}
+z.test<-data.frame(z.test)
+z.test<-cbind(z.test,as.numeric(alpha$subsample))#$
+names(z.test)<-c("X1","X2","X3")
+z.test<-z.test[-c(1,64,65,66,67),]
+p.z<-ggplot(data=z.test,aes(x=X3, y=X1, fill=as.factor((z.test[,2]<=0.05)), colour=as.factor((z.test[,2]<=0.05))))
+p.z<-p.z + geom_point()
+multiplot(p.alpha + theme(legend.position="bottom"), p.z + theme(legend.position="bottom"),cols=2)
+@
+
+\subsection{Taxonomic Diversity and rarefaction curves}
+
+At Order level
+
+<<rarefact_Orders, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Rarefaction curves of Taxonomic richness at Order level per sample'>>=
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=19, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+alpha<-rarefaction(otu.table[[1]],subsample=150)
+#
+#
+# PLOT RESULTS
+#
+#
+# Dataframe to ggplot
+dc<-cbind(melt(alpha$richness),melt(alpha$SE))[,c(3,1,2,5)]
+colnames(dc)<-c("rarefy","sample","metric","SE")
+dc<-dc[!is.na(dc$metric),]
+variable.treatment<-as.matrix(dc$sample)
+variable.treatment[-(grep("+N+",variable.treatment))]<-"Infected"
+variable.treatment[grep("+N+",variable.treatment)]<-"Not infected"
+ciMult <- qt(0.95/2 + .5, 9) #datac$N-1)
+dc<-cbind(dc,factor(variable.treatment),dc$metric+(ciMult*dc$SE),dc$metric-(ciMult*dc$SE))#$
+colnames(dc)[5:7]<-c("treatment","ci.min","ci.max")
+# ggplot
+pd <- position_dodge(0.1)
+hulls<-rbind(dc[,c(1,2,5,6)],setNames(dc[length(dc[,1]):1,c(1,2,5,7)],names(dc[,c(1,2,5,6)])))
+#
+#
+#
+# Make Dummy Variable for plotting
+#
+#
+#
+element<-as.matrix(hulls[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+hulls<-cbind(hulls,"sub.set"=element)
+#
+element<-as.matrix(dc[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+dc<-cbind(dc,"sub.set"=element)
+#
+#
+#
+p1<-ggplot(dc,aes(x=rarefy, y=metric, fill=sample, colour=sample))
+#p1<-p1 + geom_errorbar(data=dc,aes(ymin=ci.min, ymax=ci.max), width=.25, position=pd)
+p1<-p1 + geom_polygon(data=hulls,
+	aes(
+		y=ci.min,
+			x=rarefy,
+			order=rownames(data),
+				fill=sample,
+				colour=NULL),
+				width=0.5,
+				position="identity",
+				alpha=0.4)
+p1<-p1 + geom_line(data=dc,aes(x=rarefy, y=metric, fill=NULL, colour=sample), position=pd)
+#p1<-p1 + geom_point(position=pd)
+p1<-p1 + labs (x="Number of reads", y="Mean taxnonomic Richness") + theme_bw() + theme(
+			legend.box="horizontal",
+			legend.position="bottom",
+			legend.title=element_blank(),
+			legend.text=element_text(size=6),
+			legend.key.height=unit(0.16,"inch"),
+			legend.text=element_text(size=8))
+p1<-p1 + guides(fill=guide_legend(ncol=6))
+p1<-p1 + facet_grid(sub.set~treatment) 		
+print(p1)
+@
+
+<<rarefact_Families, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Rarefaction curves of Taxonomic richness at Family level per sample'>>=
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=21, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+alpha<-rarefaction(otu.table[[1]],subsample=150)
+#
+#
+# PLOT RESULTS
+#
+#
+# Dataframe to ggplot
+dc<-cbind(melt(alpha$richness),melt(alpha$SE))[,c(3,1,2,5)]
+colnames(dc)<-c("rarefy","sample","metric","SE")
+dc<-dc[!is.na(dc$metric),]
+variable.treatment<-as.matrix(dc$sample)
+variable.treatment[-(grep("+N+",variable.treatment))]<-"Infected"
+variable.treatment[grep("+N+",variable.treatment)]<-"Not infected"
+ciMult <- qt(0.95/2 + .5, 9) #datac$N-1)
+dc<-cbind(dc,factor(variable.treatment),dc$metric+(ciMult*dc$SE),dc$metric-(ciMult*dc$SE))#$
+colnames(dc)[5:7]<-c("treatment","ci.min","ci.max")
+# ggplot
+pd <- position_dodge(0.1)
+hulls<-rbind(dc[,c(1,2,5,6)],setNames(dc[length(dc[,1]):1,c(1,2,5,7)],names(dc[,c(1,2,5,6)])))
+#
+#
+#
+# Make Dummy Variable for plotting
+#
+#
+#
+element<-as.matrix(hulls[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+hulls<-cbind(hulls,"sub.set"=element)
+#
+element<-as.matrix(dc[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+dc<-cbind(dc,"sub.set"=element)
+#
+#
+#
+p1<-ggplot(dc,aes(x=rarefy, y=metric, fill=sample, colour=sample))
+#p1<-p1 + geom_errorbar(data=dc,aes(ymin=ci.min, ymax=ci.max), width=.25, position=pd)
+p1<-p1 + geom_polygon(data=hulls,
+	aes(
+		y=ci.min,
+			x=rarefy,
+			order=rownames(data),
+				fill=sample,
+				colour=NULL),
+				width=0.5,
+				position="identity",
+				alpha=0.4)
+p1<-p1 + geom_line(data=dc,aes(x=rarefy, y=metric, fill=NULL, colour=sample), position=pd)
+#p1<-p1 + geom_point(position=pd)
+p1<-p1 + labs (x="Number of reads", y="Mean taxonomic Richness") + theme_bw() + theme(
+			legend.box="horizontal",
+			legend.position="bottom",
+			legend.title=element_blank(),
+			legend.text=element_text(size=6),
+			legend.key.height=unit(0.16,"inch"),
+			legend.text=element_text(size=8))
+p1<-p1 + guides(fill=guide_legend(ncol=6))
+p1<-p1 + facet_grid(sub.set~treatment) 		
+print(p1)
+@
+<<rarefact_Orders1a, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Average rarefied OTU Richness per treatment. All singletons were included.'>>=
+#
+# ERASE PDF INSERT FOR CULOPOLLO
+#
+#
+#pdf("/Users/ferninfm/Dropbox/ANTONIA/3_Paper/Material_for_figures/alphataxOrder_Z.pdf")
+alpha.n<-alpha$richness[,c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+alpha.i<-alpha$richness[,-c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.n<-alpha$SE[,c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.n<-sqrt(rowSums(SE.n^2))
+SE.i<-alpha$SE[,-c(1,2,4,6,7,12,13,15,16,17,19,21,24)]
+SE.i<-sqrt(rowSums(SE.i^2))
+counts.n<-rowSums(!is.na(alpha.n))
+counts.i<-rowSums(!is.na(alpha.i))
+alpha.n<-rowMeans(alpha.n,na.rm=T)
+alpha.i<-rowMeans(alpha.i,na.rm=T)
+#
+#
+alpha.plot<-data.frame(rbind(cbind(alpha.n,alpha.n-(1.96*SE.n),alpha.n+(1.96*SE.n),as.numeric(alpha$subsample),0),cbind(alpha.i,alpha.i-(1.96*SE.i),alpha.i+(1.96*SE.i),as.numeric(alpha$subsample),1)))
+names(alpha.plot)<-c("alpha","cilow","cihigh","sequences","treatment")
+alpha.plot<-alpha.plot[-c(131:134),]
+p.alpha<-ggplot(alpha.plot,aes(x=as.numeric(sequences), y=as.numeric(alpha), ymin=as.numeric(cilow), ymax=as.numeric(cihigh), fill=as.factor(treatment), colour=as.factor(treatment)))
+#+ facet_wrap(~ treatment) + scale_fill_manual(values=c("#E69F00", "#56B4E9")))
+#
+# P on the difference of the means
+#
+#
+z.test<-mat.or.vec(length(alpha.n),2)
+for (i in 1:length(alpha.n))
+{
+z.test[i,1]<-(alpha.n[i]-alpha.i[i])/sqrt(
+(((SE.n[i]^2)/counts.n[i])+((SE.i[i]^2)/counts.i[i])))
+z.test[i,2]<-2*pnorm(-abs(z.test[i,1]))
+}
+z.test<-data.frame(z.test)
+z.test<-cbind(z.test,as.numeric(alpha$subsample))#$
+names(z.test)<-c("X1","X2","X3")
+z.test<-z.test[-c(1,64,65,66,67),]
+p.z<-ggplot(data=z.test,aes(x=X3, y=X1, fill=as.factor((z.test[,2]<=0.05)), colour=as.factor((z.test[,2]<=0.05))))
+p.alpha<-p.alpha+geom_point()+geom_errorbar()
+p.z<-p.z + geom_point()
+multiplot(p.alpha + theme(legend.position="bottom"), p.z + theme(legend.position="bottom"),cols=2)
+#dev.off()
+@
+%
+%
+%
+<<rarefact_genera, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Rarefaction curves of Taxonomic richness at genus level per sample'>>=
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=23, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+alpha<-rarefaction(otu.table[[1]],subsample=150)
+#
+#
+# PLOT RESULTS
+#
+#
+# Dataframe to ggplot
+dc<-cbind(melt(alpha$richness),melt(alpha$SE))[,c(3,1,2,5)]
+colnames(dc)<-c("rarefy","sample","metric","SE")
+dc<-dc[!is.na(dc$metric),]
+variable.treatment<-as.matrix(dc$sample)
+variable.treatment[-(grep("+N+",variable.treatment))]<-"Infected"
+variable.treatment[grep("+N+",variable.treatment)]<-"Not infected"
+ciMult <- qt(0.95/2 + .5, 9) #datac$N-1)
+dc<-cbind(dc,factor(variable.treatment),dc$metric+(ciMult*dc$SE),dc$metric-(ciMult*dc$SE))#$
+colnames(dc)[5:7]<-c("treatment","ci.min","ci.max")
+# ggplot
+pd <- position_dodge(0.1)
+hulls<-rbind(dc[,c(1,2,5,6)],setNames(dc[length(dc[,1]):1,c(1,2,5,7)],names(dc[,c(1,2,5,6)])))
+#
+#
+#
+# Make Dummy Variable for plotting
+#
+#
+#
+element<-as.matrix(hulls[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+hulls<-cbind(hulls,"sub.set"=element)
+#
+element<-as.matrix(dc[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+dc<-cbind(dc,"sub.set"=element)
+#
+#
+#
+p1<-ggplot(dc,aes(x=rarefy, y=metric, fill=sample, colour=sample))
+#p1<-p1 + geom_errorbar(data=dc,aes(ymin=ci.min, ymax=ci.max), width=.25, position=pd)
+p1<-p1 + geom_polygon(data=hulls,
+	aes(
+		y=ci.min,
+			x=rarefy,
+			order=rownames(data),
+				fill=sample,
+				colour=NULL),
+				width=0.5,
+				position="identity",
+				alpha=0.4)
+p1<-p1 + geom_line(data=dc,aes(x=rarefy, y=metric, fill=NULL, colour=sample), position=pd)
+#p1<-p1 + geom_point(position=pd)
+p1<-p1 + labs (x="Number of reads", y="Mean taxonomic Richness") + theme_bw() + theme(
+			legend.box="horizontal",
+			legend.position="bottom",
+			legend.title=element_blank(),
+			legend.text=element_text(size=6),
+			legend.key.height=unit(0.16,"inch"),
+			legend.text=element_text(size=8))
+p1<-p1 + guides(fill=guide_legend(ncol=6))
+p1<-p1 + facet_grid(sub.set~treatment) 		
+print(p1)
+@
+%
+% PSEUDOSPECIES
+%
+<<rarefact_species, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Rarefaction curves of Taxonomic richness at Pseudospecies level per sample'>>=
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=25, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+alpha<-rarefaction(otu.table[[1]],subsample=150)
+#
+#
+# PLOT RESULTS
+#
+#
+# Dataframe to ggplot
+dc<-cbind(melt(alpha$richness),melt(alpha$SE))[,c(3,1,2,5)]
+colnames(dc)<-c("rarefy","sample","metric","SE")
+dc<-dc[!is.na(dc$metric),]
+variable.treatment<-as.matrix(dc$sample)
+variable.treatment[-(grep("+N+",variable.treatment))]<-"Infected"
+variable.treatment[grep("+N+",variable.treatment)]<-"Not infected"
+ciMult <- qt(0.95/2 + .5, 9) #datac$N-1)
+dc<-cbind(dc,factor(variable.treatment),dc$metric+(ciMult*dc$SE),dc$metric-(ciMult*dc$SE))#$
+colnames(dc)[5:7]<-c("treatment","ci.min","ci.max")
+# ggplot
+pd <- position_dodge(0.1)
+hulls<-rbind(dc[,c(1,2,5,6)],setNames(dc[length(dc[,1]):1,c(1,2,5,7)],names(dc[,c(1,2,5,6)])))
+#
+#
+#
+# Make Dummy Variable for plotting
+#
+#
+#
+element<-as.matrix(hulls[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+hulls<-cbind(hulls,"sub.set"=element)
+#
+element<-as.matrix(dc[,2])
+element[element=="Aspi_myr+N+A420"]<-"smaller"
+element[element=="Leca_bic+N+A368"]<-"smaller"
+element[element=="Aca_fus+N+A623"]<-"smaller"
+element[element=="Psori_con+N+A229"]<-"smaller"
+element[element=="Can_vit+N+A138"]<-"smaller"
+element[element=="Rhi_geo+N+A172"]<-"smaller"
+element[element=="Leci_lap+Mue_pyg+A636"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A418"]<-"smaller"
+element[element=="Leca_bic+Arth_var+A832"]<-"smaller"
+element[element=="Leca_poly+Cer_epi+A482"]<-"smaller"
+element[element=="Leca_poly+Lich_lec+A434"]<-"smaller"
+element[element=="Aspi_myr+Sag_fis+A608"]<-"smaller"
+element[element=="Psori_con+N+A476"]<-"smaller"
+element[element=="Leci_lap+N+A792"]<-"smaller"
+element[element=="Leca_poly+N+A243"]<-"larger"
+element[element=="Umb_cyl+N+A032"]<-"larger"
+element[element=="Leca_intr+N+A360"]<-"larger"
+element[element=="Leca_schw+N+A227"]<-"larger"
+element[element=="Teph_atr+N+A361"]<-"larger"
+element[element=="Teph_atr+Mue_atr+A440"]<-"larger"
+element[element=="Rhi_geo+Endo_macro+A194"]<-"larger"
+element[element=="Leca_poly+Mue_pyg+A670"]<-"larger"
+element[element=="Vari_lac+Stig_eucl+A622"]<-"larger"
+element[element=="Teph_atr+Tae_atr+A809"]<-"larger"
+element[element=="Teph_atr+Sky_teph+A280"]<-"larger"
+dc<-cbind(dc,"sub.set"=element)
+#
+#
+#
+p1<-ggplot(dc,aes(x=rarefy, y=metric, fill=sample, colour=sample))
+#p1<-p1 + geom_errorbar(data=dc,aes(ymin=ci.min, ymax=ci.max), width=.25, position=pd)
+p1<-p1 + geom_polygon(data=hulls,
+	aes(
+		y=ci.min,
+			x=rarefy,
+			order=rownames(data),
+				fill=sample,
+				colour=NULL),
+				width=0.5,
+				position="identity",
+				alpha=0.4)
+p1<-p1 + geom_line(data=dc,aes(x=rarefy, y=metric, fill=NULL, colour=sample), position=pd)
+#p1<-p1 + geom_point(position=pd)
+p1<-p1 + labs (x="Number of reads", y="Mean taxonomic Richness") + theme_bw() + theme(
+			legend.box="horizontal",
+			legend.position="bottom",
+			legend.title=element_blank(),
+			legend.text=element_text(size=6),
+			legend.key.height=unit(0.16,"inch"),
+			legend.text=element_text(size=8))
+p1<-p1 + guides(fill=guide_legend(ncol=6))
+p1<-p1 + facet_grid(sub.set~treatment) 		
+print(p1)
+@
+\section{Clasification of samples based on OTU composition}
+<<foo_tree, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE, fig.height=8, fig.pos='H', fig.lp="fig:", fig.cap='Hierarchical clustergram (dendrogram) showing similarity in OTU composition between samples. Hierarchical clustering was carried out on a pairwise Bray-Curtis distance matrix between samples. The long branch lengths of the cladogram reinforce the lack of structure of the dataset. Bray-Curtis distances tend to overestimate the differences due to minoritary species'>>=
+library(vegan)
+library(vegetarian)
+library(ggdendro)
+#
+# Table of all OTUs
+#
+otu.table<-tabulate.and.print(data=seq.subset, samples=1, groups=5, normalize=FALSE, print=FALSE)
+otu.table[[1]]<-otu.table[[1]][c(1,2,4,6,7,12,13,15,16,17,20,22,25,3,5,8,9,10,11,14,18,19,21,23,24,26),order(as.numeric(colnames(otu.table[[1]])))]
+otu.table[[1]]<-otu.table[[1]][rownames(otu.table[[1]])!="Rhi_geo+Mue_pyg+A405",]
+otu.table[[2]]<-otu.table[[1]]
+otu.table[[1]]<-otu.table[[1]][,colSums(otu.table[[1]])!=1]
+#
+#
+# Change names for plot (LATER)
+#
+#
+new.names.table.otu<-unlist(strsplit(row.names(otu.table[[1]]),"\\+"))[seq(3, length(unlist(strsplit(row.names(otu.table[[1]]),"\\+"))), 3)]
+#
+#
+# Reassign name
+#
+table.otus<-otu.table[[1]]
+#
+#
+#
+table.otus.2<-table.otus[,colSums(table.otus)>1]
+table.otus.3<-table.otus.2
+table.otus.2[,]<-normalize.rows(table.otus.2)
+tree<-hclust(vegdist(table.otus.2))
+dhc<-as.dendrogram(tree)
+ddata <- dendro_data(dhc, type = "rectangle")
+p1 <- ggplot(segment(ddata)) + 
+  geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) + 
+  coord_flip() + 
+  scale_y_reverse(expand = c(0.2, 0)) +
+  geom_text(data = ddata$labels, aes(x = x, y = y, label = label), size = 3, hjust=0, vjust = 0.5)
+p1 + coord_flip() + theme_dendro()
+#$
+@
+
+<<table_OTUS_1, results='asis', echo=FALSE, out.width='\\textwidth'>>=
+#
+#---------------------#
+# Table of counts     #
+#---------------------#
+#
+row.names(table.otus.3)<-new.names.table.otu
+#
+table.otus.3[table.otus.3[,]!=0]<-1
+#
+#-----------------------#
+# Table of shared OTUs  #
+#-----------------------#
+#
+o<-dim(table.otus.3)[1]
+shared.otus<-mat.or.vec(o,o)
+colnames(shared.otus)<-rownames(shared.otus)<-rownames(table.otus.3)
+for (i in 1:(o-1))
+{
+for (j in (i+1):o)
+{
+shared.otus[j,i]<-sum(colSums(table.otus.3[c(i,j),])==2)
+}}
+#
+#-------------------#
+# Exclusive OTUs    #
+#-------------------#
+#
+exclusive.otus<-mat.or.vec(o,2)
+total.otus<-mat.or.vec(o,2)
+total.otus[,2]<-rowSums(table.otus.3)
+for (i in 1:o)
+{
+exclusive.otus[i,2]<-sum(colSums(table.otus.3)==table.otus.3[i,])
+}
+#----------------
+# FULL DATASET
+#----------------
+table.otus.3<-otu.table[[2]]
+table.otus.3[table.otus.3[,]!=0]<-1
+total.otus[,1]<-rowSums(table.otus.3)
+for (i in 1:o)
+{
+exclusive.otus[i,1]<-sum(colSums(table.otus.3)==table.otus.3[i,])
+}
+#
+for (i in 1:(o-1))
+{
+for (j in (i+1):o)
+{
+shared.otus[i,j]<-sum(colSums(table.otus.3[c(i,j),])==2)
+}}
+shared.otus[shared.otus==0]<-"."
+shared.otus<-cbind(paste(total.otus[,1],total.otus[,2],sep="/"),paste(exclusive.otus[,1],exclusive.otus[,2],sep="/"),shared.otus)
+colnames(shared.otus)[1:2]<-c("Total","Exclusive")
+shared.otus<-xtable(shared.otus, caption=c("Exclusive and shared OTUS between samples. First column shows the total number OTUs and the number of of heavy OTUs, the second column the number of Exclusive OTUS and the rest the pattern of shared units.","Exclusive and shared OTUS"), type="latex", digits=0)
+print(shared.otus, floating.environment='sidewaystable', floating=TRUE,table.placement ="b", caption.placement ="top", rotate.colnames=TRUE, size=8)
+@
+
+%@
+\end{document}

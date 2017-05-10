@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Methodologic pipeline}{2}
+\contentsline {section}{\numberline {2}Quality assesment and depth of the dataset used}{4}
+\contentsline {section}{\numberline {3}Taxonomic profile of the samples}{6}
+\contentsline {subsection}{\numberline {3.1}Division}{6}
+\contentsline {subsection}{\numberline {3.2}Classes}{9}
+\contentsline {subsection}{\numberline {3.3}Orders}{10}
+\contentsline {subsection}{\numberline {3.4}Families}{11}
+\contentsline {section}{\numberline {4}Diversity Patterns}{12}
+\contentsline {subsection}{\numberline {4.1}OTU Diversity and rarefaction curves}{12}
+\contentsline {subsection}{\numberline {4.2}Taxonomic Diversity and rarefaction curves}{15}
+\contentsline {section}{\numberline {5}Clasification of samples based on OTU composition}{20}
